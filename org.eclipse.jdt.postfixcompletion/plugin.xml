@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+<extension point="org.eclipse.jdt.ui.javaCompletionProposalComputer"
+   id="postfix_completion"
+   name="Postfix Completion">
+   <proposalCategory icon="icons/elcl16/templateprop_co.gif"/>
+ </extension>
+
+ 	<extension point="org.eclipse.jdt.ui.javaCompletionProposalComputer"
+   				id="org.eclipse.jdt.postfixcompletion"
+   				name="Postfix Completion">
+   		<javaCompletionProposalComputer
+           activate="true"
+           categoryId="org.eclipse.jdt.postfixcompletion.postfix_completion"
+           class="org.eclipse.jdt.postfixcompletion.core.PostfixCompletionProposalComputer"
+           needsSortingAfterFiltering="false">
+        <partition
+              type="__dftl_partition_content_type">
+        </partition>
+      			<partition type="__java_string"/>
+   		</javaCompletionProposalComputer>
+ </extension>
+  <extension
+        point="org.eclipse.ui.editors.templates">
+     <contextType
+           class="org.eclipse.jdt.postfixcompletion.core.JavaStatementPostfixContextType"
+           id="postfix"
+           name="Java postfix"
+           registryId="org.eclipse.jdt.ui.CompilationUnitEditor">
+     </contextType>
+ <!--    <resolver
+           class="org.eclipse.jdt.postfixcompletion.core.OuterExpressionResolver"
+           contextTypeId="postfix"
+           type="outer_expression">
+     </resolver> -->
+  </extension>
+ 
+ <!--
+            categoryId="org.eclipse.ui.texteditor.textual_proposals"
+ -->
+         
+
+</plugin>
