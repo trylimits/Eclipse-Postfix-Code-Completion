@@ -16,9 +16,9 @@ public class CustomTypeResolver extends TypeResolver {
 	public void resolve(TemplateVariable variable, TemplateContext context) {
 		List<String> params= variable.getVariableType().getParams();
 		String param;
-		if (params.size() != 0 && context instanceof JavaStatementPostfixContext) {
+		if (params.size() != 0 && context instanceof JavaContext) {
 			param = params.get(0);
-			JavaStatementPostfixContext jc= (JavaStatementPostfixContext) context;
+			JavaContext jc= (JavaContext) context;
 			TemplateVariable ref= jc.getTemplateVariable(param);
 			MultiVariable mv= (MultiVariable) variable;
 			if (ref instanceof JavaVariable) {

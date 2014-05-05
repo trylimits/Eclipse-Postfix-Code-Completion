@@ -35,8 +35,8 @@ public class ActualTypeResolver extends TypeResolver {
 						param = param.substring(param.indexOf("<") + 1, param.indexOf(endChar));
 					}
 					
-//					String reference= jc.addImport(param);
-					mv.setValue(param);
+					String reference= jc.addImport(param);
+					mv.setValue(reference);
 					mv.setUnambiguous(true);
 		
 					mv.setResolved(true);

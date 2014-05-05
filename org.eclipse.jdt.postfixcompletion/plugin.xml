@@ -48,6 +48,12 @@
             description="%templates.java.resolvers.Type.description"
             name="%templates.java.resolvers.Type.name"
             type="newType"/>
+      <resolver
+            class="org.eclipse.jdt.postfixcompletion.core.ActualTypeResolver"
+            contextTypeId="postfix"
+            description="Resolves a variable to the actual type. If no variable is given, the variable resolves to java.lang.Object."
+            name="newActualType"
+            type="newActualType"/>
  <!--    <resolver
            class="org.eclipse.jdt.postfixcompletion.core.OuterExpressionResolver"
            contextTypeId="postfix"
