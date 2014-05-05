@@ -5,10 +5,11 @@ import org.eclipse.jdt.internal.compiler.ast.ASTNode;
 import org.eclipse.jdt.internal.corext.template.java.AbstractJavaContextType;
 import org.eclipse.jdt.internal.corext.template.java.CompilationUnitContext;
 import org.eclipse.jdt.internal.corext.template.java.JavaContext;
+import org.eclipse.jdt.internal.corext.template.java.NameResolver;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.templates.GlobalTemplateVariables;
-
+@SuppressWarnings("restriction")
 public class JavaStatementPostfixContextType extends AbstractJavaContextType {
 
 	public static final String ID_ALL = "postfix"; // $NON-NLS-1$
@@ -17,12 +18,12 @@ public class JavaStatementPostfixContextType extends AbstractJavaContextType {
 		this.addResolver(new GlobalTemplateVariables.Cursor());
 		this.addResolver(new OuterExpressionResolver());
 		this.addResolver(new InnerExpressionResolver());
+		this.addResolver(new InnerExpressionTypeResolver());
 	}
 	
 	/* (non-Javadoc)
 	 * @see org.eclipse.jdt.internal.corext.template.java.AbstractJavaContextType#initializeContext(org.eclipse.jdt.internal.corext.template.java.JavaContext)
 	 */
-	@SuppressWarnings("restriction")
 	@Override
 	protected void initializeContext(JavaContext context) {
 		if (!getId().equals(JavaStatementPostfixContextType.ID_ALL)) { // a specific context must also allow the templates that work everywhere

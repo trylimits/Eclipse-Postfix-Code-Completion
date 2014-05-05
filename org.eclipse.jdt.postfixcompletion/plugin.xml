@@ -5,7 +5,7 @@
 <extension point="org.eclipse.jdt.ui.javaCompletionProposalComputer"
    id="postfix_completion"
    name="Postfix Completion">
-   <proposalCategory icon="icons/elcl16/templateprop_co.gif"/>
+   <proposalCategory icon="icons/elcl16/templateprop_co2.png"/>
  </extension>
 
  	<extension point="org.eclipse.jdt.ui.javaCompletionProposalComputer"
@@ -15,7 +15,7 @@
            activate="true"
            categoryId="org.eclipse.jdt.postfixcompletion.postfix_completion"
            class="org.eclipse.jdt.postfixcompletion.core.PostfixCompletionProposalComputer"
-           needsSortingAfterFiltering="false">
+           needsSortingAfterFiltering="true">
         <partition
               type="__dftl_partition_content_type">
         </partition>
@@ -30,6 +30,26 @@
            name="Java postfix"
            registryId="org.eclipse.jdt.ui.CompilationUnitEditor">
      </contextType>
+     <resolver
+            class="org.eclipse.jdt.internal.corext.template.java.NameResolver"
+            contextTypeId="postfix"
+            description="%templates.java.resolvers.Name.description"
+            name="%templates.java.resolvers.Name.name"
+            type="newName"/>
+            
+     <resolver
+            class="org.eclipse.jdt.internal.corext.template.java.VarResolver"
+            contextTypeId="postfix"
+            description="%templates.java.resolvers.Var.description"
+            name="%templates.java.resolvers.Var.name"
+            type="var"/>
+
+      <resolver
+            class="org.eclipse.jdt.postfixcompletion.core.CustomTypeResolver"
+            contextTypeId="postfix"
+            description="%templates.java.resolvers.Type.description"
+            name="%templates.java.resolvers.Type.name"
+            type="newType"/>
  <!--    <resolver
            class="org.eclipse.jdt.postfixcompletion.core.OuterExpressionResolver"
            contextTypeId="postfix"

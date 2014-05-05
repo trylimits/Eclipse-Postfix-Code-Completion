@@ -8,6 +8,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.CompletionContext;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.codeassist.InternalCompletionContext;
 import org.eclipse.jdt.internal.codeassist.complete.CompletionOnMemberAccess;
 import org.eclipse.jdt.internal.codeassist.complete.CompletionOnQualifiedNameReference;
@@ -22,6 +23,7 @@ import org.eclipse.jdt.internal.compiler.lookup.VariableBinding;
 import org.eclipse.jdt.internal.ui.JavaPlugin;
 import org.eclipse.jdt.internal.ui.text.java.AbstractTemplateCompletionProposalComputer;
 import org.eclipse.jdt.internal.ui.text.template.contentassist.TemplateEngine;
+import org.eclipse.jdt.ui.text.java.CompletionProposalCollector;
 import org.eclipse.jdt.ui.text.java.ContentAssistInvocationContext;
 import org.eclipse.jdt.ui.text.java.JavaContentAssistInvocationContext;
 import org.eclipse.jface.text.BadLocationException;
@@ -55,6 +57,23 @@ public class PostfixCompletionProposalComputer extends AbstractTemplateCompletio
 		
 		final JavaContentAssistInvocationContext jCtx = (JavaContentAssistInvocationContext) context;
         final InternalCompletionContext coreContext = (InternalCompletionContext) jCtx.getCoreContext();
+        
+        if (coreContext.isExtended() == false) {
+        	final ICompilationUnit cu = jCtx.getCompilationUnit();
+            final CompletionProposalCollector collector = new CompletionProposalCollector(cu) {
+                @Override
+                public void acceptContext(final CompletionContext context) {
+                    super.acceptContext(context);
+                }
+            };
+            collector.setInvocationContext(jCtx);
+            collector.setRequireExtendedContext(true);
+            try {
+                cu.codeComplete(jCtx.getInvocationOffset(), collector);
+            } catch (JavaModelException e) {
+            	
+            }
+        }
         
         if (coreContext.isExtended()) {
             // didn't manage to get in here:
@@ -118,6 +137,7 @@ public class PostfixCompletionProposalComputer extends AbstractTemplateCompletio
 		return super.computeCompletionProposals(context, monitor);
 	}
 
+	@SuppressWarnings("restriction")
 	@Override
 	protected TemplateEngine computeCompletionEngine(
 			JavaContentAssistInvocationContext context) {
@@ -156,16 +176,37 @@ public class PostfixCompletionProposalComputer extends AbstractTemplateCompletio
 				
 				System.out.println("CompletionTemplateEngine returned"); // XXX Remove debug stuff
 				
-		        if (coreContext instanceof InternalCompletionContext && coreContext.isExtended()) {
+		        if (coreContext instanceof InternalCompletionContext && ((InternalCompletionContext)coreContext).isExtended()) {
 		            ASTNode completionNode = ((InternalCompletionContext)coreContext).getCompletionNode();
 		            ASTNode completionNodeParent = ((InternalCompletionContext)coreContext).getCompletionNodeParent();
 		            fPostfixCompletionTemplateEngine.setASTNodes(completionNode, completionNodeParent);
+		        } else if (coreContext instanceof InternalCompletionContext && ((InternalCompletionContext)coreContext).isExtended() == false) {
+		            if (coreContext.isExtended() == false) {
+		            	final ICompilationUnit cu = context.getCompilationUnit();
+		                final CompletionProposalCollector collector = new CompletionProposalCollector(cu) {
+		                    @Override
+		                    public void acceptContext(final CompletionContext context) {
+		                        super.acceptContext(context);
+		                        ASTNode completionNode = ((InternalCompletionContext)context).getCompletionNode();
+		    		            ASTNode completionNodeParent = ((InternalCompletionContext)context).getCompletionNodeParent();
+		    		            fPostfixCompletionTemplateEngine.setASTNodes(completionNode, completionNodeParent);
+		                    }
+		                };
+		                collector.setInvocationContext(context);
+		                collector.setRequireExtendedContext(true);
+		                try {
+		                    cu.codeComplete(context.getInvocationOffset(), collector);
+		                } catch (JavaModelException e) {
+		                	
+		                }
+		            }
 		        }
-				
+		        					
 				return fPostfixCompletionTemplateEngine;
 			}
 			
 		}
+		System.out.println("Not returned");
 		return null;
 
 	}

@@ -46,9 +46,9 @@ public class PostfixTemplateEngine extends TemplateEngine {
 			return;
 		}
 
-		CompilationUnitContext context= ((JavaStatementPostfixContextType) fContextType).createContext(document, completionPosition, selection.y, compilationUnit, currentNode, parentNode);
+		JavaStatementPostfixContext context= ((JavaStatementPostfixContextType) fContextType).createContext(document, completionPosition, selection.y, compilationUnit, currentNode, parentNode);
 		context.setVariable("selection", selectedText); //$NON-NLS-1$
-		int start= context.getStart();
+		int start= context.getAffectedSourceRegion().getOffset();
 		int end= context.getEnd();
 		IRegion region= new Region(start, end - start);
 
@@ -57,7 +57,7 @@ public class PostfixTemplateEngine extends TemplateEngine {
 		for (int i= 0; i != templates.length; i++) {
 			Template template= templates[i];
 			if (context.canEvaluate(template)) {
-				fProposals.add(new TemplateProposal(template, context, region, getImage()));
+				fProposals.add(new PostfixTemplateProposal(template, context, region, getImage()));
 			}
 		}
 	
