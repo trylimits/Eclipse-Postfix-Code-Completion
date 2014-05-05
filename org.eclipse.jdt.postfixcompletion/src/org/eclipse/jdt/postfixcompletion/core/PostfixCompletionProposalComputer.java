@@ -43,6 +43,8 @@ public class PostfixCompletionProposalComputer extends AbstractTemplateCompletio
 		fPostfixCompletionTemplateEngine = createTemplateEngine(templateContextRegistry, JavaStatementPostfixContextType.ID_ALL);
 	}
 	
+	
+	
 	private static PostfixTemplateEngine createTemplateEngine(ContextTypeRegistry templateContextRegistry, String contextTypeId) {
 		TemplateContextType contextType = templateContextRegistry.getContextType(contextTypeId);
 		Assert.isNotNull(contextType);
@@ -81,8 +83,8 @@ public class PostfixCompletionProposalComputer extends AbstractTemplateCompletio
             final ASTNode completionNode = coreContext.getCompletionNode();
             final ASTNode completionNodeParent = coreContext.getCompletionNodeParent();
 //            final ObjectVector visibleFields = coreContext.getVisibleFields();
-//            System.out.println("This node: " + completionNode);
-//            System.out.println("Parent node: " + completionNodeParent);
+            System.out.println("This node: " + completionNode);
+            System.out.println("Parent node: " + completionNodeParent);
 //            CompletionOnMemberAccess asdf = (CompletionOnMemberAccess) completionNode;
 //            System.out.println(asdf.receiver.sourceStart);
 //            System.out.println("asdf");

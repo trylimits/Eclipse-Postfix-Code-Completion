@@ -12,7 +12,7 @@ public class InnerExpressionResolver extends SimpleTemplateVariableResolver {
 	public static final String INNER_EXPRESSION_VAR = "inner_expression";
 	
 	public InnerExpressionResolver() {
-		super(INNER_EXPRESSION_VAR, "test");
+		super(INNER_EXPRESSION_VAR, "");
 	}
 	
 	protected String resolve(TemplateContext context) {
@@ -30,6 +30,7 @@ public class InnerExpressionResolver extends SimpleTemplateVariableResolver {
 			jv.setValue(resolve(context));
 			jv.setParamType(c.getInnerExpressionType());
 			jv.setResolved(true);
+			jv.setUnambiguous(true);
 			return;
 		}
 		super.resolve(variable, context);

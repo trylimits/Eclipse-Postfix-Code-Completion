@@ -12,10 +12,8 @@
    				id="org.eclipse.jdt.postfixcompletion"
    				name="Postfix Completion">
    		<javaCompletionProposalComputer
-           activate="true"
            categoryId="org.eclipse.jdt.postfixcompletion.postfix_completion"
-           class="org.eclipse.jdt.postfixcompletion.core.PostfixCompletionProposalComputer"
-           needsSortingAfterFiltering="true">
+           class="org.eclipse.jdt.postfixcompletion.core.PostfixCompletionProposalComputer">
         <partition
               type="__dftl_partition_content_type">
         </partition>
@@ -56,6 +54,19 @@
            type="outer_expression">
      </resolver> -->
   </extension>
+  
+  <extension
+		point="org.eclipse.jdt.ui.javaCompletionProposalSorters">
+		<proposalSorter
+			id="org.eclipse.jdt.ui.RelevanceSorter"
+			name="%RelevanceSorter.name"
+			class="org.eclipse.jdt.internal.ui.text.java.RelevanceSorter"/>
+		<proposalSorter
+			id="org.eclipse.jdt.ui.AlphabeticSorter"
+			name="%AlphabeticSorter.name"
+			class="org.eclipse.jdt.internal.ui.text.java.AlphabeticSorter"/>
+	</extension>
+	
  
  <!--
             categoryId="org.eclipse.ui.texteditor.textual_proposals"

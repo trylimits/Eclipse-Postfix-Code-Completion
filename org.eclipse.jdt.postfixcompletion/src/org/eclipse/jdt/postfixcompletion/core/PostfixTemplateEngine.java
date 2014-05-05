@@ -48,7 +48,7 @@ public class PostfixTemplateEngine extends TemplateEngine {
 
 		JavaStatementPostfixContext context= ((JavaStatementPostfixContextType) fContextType).createContext(document, completionPosition, selection.y, compilationUnit, currentNode, parentNode);
 		context.setVariable("selection", selectedText); //$NON-NLS-1$
-		int start= context.getAffectedSourceRegion().getOffset();
+		int start= context.getStart();
 		int end= context.getEnd();
 		IRegion region= new Region(start, end - start);
 

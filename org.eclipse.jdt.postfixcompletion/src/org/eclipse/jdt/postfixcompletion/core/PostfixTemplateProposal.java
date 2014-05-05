@@ -1,6 +1,7 @@
 package org.eclipse.jdt.postfixcompletion.core;
 
 import org.eclipse.jdt.internal.ui.text.template.contentassist.TemplateProposal;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
@@ -21,7 +22,6 @@ public class PostfixTemplateProposal extends TemplateProposal {
 		if (getContext() instanceof JavaStatementPostfixContext) {
 			return ((JavaStatementPostfixContext)getContext()).getAffectedSourceRegion().getOffset();
 		}
-		System.out.println("PostfixTemplateProposal.getReplaceOffset()");
 		return super.getReplaceOffset();
 	}
 	
@@ -29,7 +29,12 @@ public class PostfixTemplateProposal extends TemplateProposal {
 	public boolean validate(IDocument document, int offset, DocumentEvent event) {
 		if (getContext() instanceof JavaStatementPostfixContext) {
 			JavaStatementPostfixContext c = (JavaStatementPostfixContext) getContext();
-			return this.getTemplate().getName().toLowerCase().startsWith(c.getPrefixKey().toLowerCase());
+			try {
+				String content = document.get(c.getStart(), offset - c.getStart());
+				return this.getTemplate().getName().toLowerCase().startsWith(content.toLowerCase());
+			} catch (BadLocationException e) {
+				e.printStackTrace();
+			}
 		}
 		return super.validate(document, offset, event);
 	}

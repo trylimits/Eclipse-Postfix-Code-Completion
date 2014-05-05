@@ -59,7 +59,7 @@ public class JavaStatementPostfixContext extends JavaContext {
 	@Override
 	public boolean canEvaluate(Template template) {
 		
-		System.out.println("JavaStatementPostfixContext.canEvaluate()");
+//		System.out.println("JavaStatementPostfixContext.canEvaluate()");
 
 		if (!template.getContextTypeId().equals(
 				JavaStatementPostfixContext.CONTEXT_TYPE_ID))
@@ -72,10 +72,10 @@ public class JavaStatementPostfixContext extends JavaContext {
 			return false;
 		
 		// if the typed in prefix does not match the template name we immediately return false
-		System.out.println("Current prefix: " + getPrefixKey());
+//		System.out.println("Current prefix: " + getPrefixKey());
 		if ( template.getName().toLowerCase()
 				.startsWith(getPrefixKey().toLowerCase()) == false) {
-			System.out.println("Not triggered bcause prefix mismatch");
+//			System.out.println("Not triggered bcause prefix mismatch");
 			return false;
 		}
 		
@@ -86,7 +86,7 @@ public class JavaStatementPostfixContext extends JavaContext {
 	}
 
 	protected String getPrefixKey() {
-		System.out.println("JavaStatementPostfixContext.getPrefixKey()");
+//		System.out.println("JavaStatementPostfixContext.getPrefixKey()");
 		IDocument document = getDocument();
 		int start = getCompletionOffset();
 		int end = getEnd();
@@ -95,7 +95,7 @@ public class JavaStatementPostfixContext extends JavaContext {
 			while (!".".equals(temp)) {
 				temp = document.get(--start, 1);
 			}
-			System.out.println(document.get(start + 1, end - start - 1));
+//			System.out.println(document.get(start + 1, end - start - 1));
 			return document.get(start + 1, end - start - 1);
 		} catch (BadLocationException e) {
 			return "";
@@ -110,7 +110,7 @@ public class JavaStatementPostfixContext extends JavaContext {
 	@Override
 	public int getStart() {
 		
-		System.out.println("JavaStatementPostfixContext.getStart()");
+//		System.out.println("JavaStatementPostfixContext.getStart()");
 		// TODO this is not 100% correct atm
 //		if (currentNode != null) {
 //			return getNodeBegin(currentNode);
