@@ -86,11 +86,12 @@ public class JavaStatementPostfixContext extends JavaContext {
 		String regex = ("\\$\\{([a-zA-Z]+):inner_expression\\(([^\\$|\\{|\\}]*)\\)\\}");
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(template.getPattern());
-		boolean result = (matcher.groupCount() > 0) ? false : true;
+		boolean result = true;
 		
 		while (matcher.find()) {
 			String[] types = matcher.group(2).split(",");
 			for (String s : types) {
+				result = false;
 				if (this.isNodeResolvingTo(currentNode, s.trim()) == true) {
 					return true;
 				}
@@ -177,7 +178,6 @@ public class JavaStatementPostfixContext extends JavaContext {
 		if (sb == null) {
 			return false;
 		}
-		
 		if (new String(sb.readableName()).startsWith(signature) || (sb instanceof ArrayBinding && "array".equals(signature))) {
 			return true;
 		}
