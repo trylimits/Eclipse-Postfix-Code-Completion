@@ -88,10 +88,11 @@ public class JavaStatementPostfixContext extends JavaContext {
 			return false;
 		}
 		
-		// We check if the template make "sense" by checking the requirements for the template
+		// We check if the template makes "sense" by checking the requirements/conditoins for the template
 		// For this purpose we have to resolve the inner_expression variable of the template
 		// This approach is much faster then delegating this to the existing TemplateTranslator class
-		String regex = ("\\$\\{([a-zA-Z]+):inner_expression\\(([^\\$|\\{|\\}]*)\\)\\}");
+		
+		String regex = ("\\$\\{([a-zA-Z]+):inner_expression\\(([^\\$|\\{|\\}]*)\\)\\}"); // TODO Review this regex
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(template.getPattern());
 		boolean result = true;
@@ -141,9 +142,9 @@ public class JavaStatementPostfixContext extends JavaContext {
 		return getCompletionOffset();
 	}
 
-	
+	@Deprecated
 	public String getOuterExpression() {
-		return ""; // TODO This method is not used anymore
+		return ""; // XXX This method is not used anymore
 	}
 	
 	/**
@@ -181,7 +182,18 @@ public class JavaStatementPostfixContext extends JavaContext {
 	}
 	
 	/**
-	 * Returns true if the type or one of its supertypes of a given {@link ASTNode} resolves to a given signature.
+	 * Returns <code>true</code> if the type or one of its supertypes of a given {@link ASTNode} resolves to a given type signature.
+	 * <br/>
+	 * Examples:
+	 * <br/>
+	 * <code>
+	 * <br/>
+	 * isNodeResolvingTo(node of type java.lang.String, "java.lang.Object") returns true<br/>
+	 * isNodeResolvingTo(node of type java.lang.String, "java.lang.Iterable") returns false<br/>
+	 * </code>
+	 * 
+	 * TODO Implement this method without using the recursive helper method if there are any performance/stackoverflow issues
+	 * 
 	 * @param node an ASTNode
 	 * @param signature a fully qualified type
 	 * @return true if the type of the given ASTNode itself or one of its superclass/superinterfaces resolves to the given signature. false otherwise.
@@ -204,7 +216,8 @@ public class JavaStatementPostfixContext extends JavaContext {
 	}
 	
 	/**
-	 * This is a recursive method which performs a depth first search in the inheritance tree of the given {@link TypeBinding}.
+	 * This is a recursive method which performs a depth first search in the inheritance graph of the given {@link TypeBinding}.
+	 * 
 	 * @param sb a TypeBinding
 	 * @param signature a fully qualified type
 	 * @return true if the given TypeBinding itself or one of its superclass/superinterfaces resolves to the given signature. false otherwise.
