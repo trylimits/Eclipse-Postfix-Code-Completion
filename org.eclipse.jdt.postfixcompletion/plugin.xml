@@ -42,7 +42,7 @@
             	type="var"/>
 
       	<resolver
-            	class="org.eclipse.jdt.postfixcompletion.resolver.CustomTypeResolver"
+            	class="org.eclipse.jdt.postfixcompletion.resolver.VariableTypeResolver"
             	contextTypeId="postfix"
             	description="%templates.java.resolvers.Type.description"
             	name="%templates.java.resolvers.Type.name"

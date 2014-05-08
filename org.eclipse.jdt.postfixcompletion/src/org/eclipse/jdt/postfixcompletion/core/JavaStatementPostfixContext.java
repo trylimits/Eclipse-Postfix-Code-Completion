@@ -133,8 +133,8 @@ public class JavaStatementPostfixContext extends JavaContext {
 			}
 			return document.get(start + 1, end - start - 1);
 		} catch (BadLocationException e) {
-			return "";
 		}
+		return "";
 	}
 	
 	@Override

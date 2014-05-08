@@ -5,7 +5,7 @@ import org.eclipse.jface.text.templates.SimpleTemplateVariableResolver;
 import org.eclipse.jface.text.templates.TemplateContext;
 
 /**
- * @deprecated This is not used anymore and should be replaced by other <code>VariableResolver</code>, i.e. {@link CustomTypeResolver} or {@link ActualTypeResolver}
+ * @deprecated This is not used anymore and should be replaced by other <code>VariableResolver</code>, i.e. {@link VariableTypeResolver} or {@link ActualTypeResolver}
  */
 @Deprecated
 public class InnerExpressionTypeResolver extends SimpleTemplateVariableResolver {

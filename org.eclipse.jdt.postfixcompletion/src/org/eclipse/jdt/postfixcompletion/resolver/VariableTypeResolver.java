@@ -14,7 +14,7 @@ import org.eclipse.jface.text.templates.TemplateVariable;
  * to be another variable, i.e. <code>${n:newType(another_variable)}</code>.
  */
 @SuppressWarnings("restriction")
-public class CustomTypeResolver extends TypeResolver {
+public class VariableTypeResolver extends TypeResolver {
 
 	@Override
 	public void resolve(TemplateVariable variable, TemplateContext context) {
