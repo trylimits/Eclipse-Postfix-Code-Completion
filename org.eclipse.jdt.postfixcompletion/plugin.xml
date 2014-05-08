@@ -43,13 +43,13 @@
             type="var"/>
 
       <resolver
-            class="org.eclipse.jdt.postfixcompletion.core.CustomTypeResolver"
+            class="org.eclipse.jdt.postfixcompletion.resolver.CustomTypeResolver"
             contextTypeId="postfix"
             description="%templates.java.resolvers.Type.description"
             name="%templates.java.resolvers.Type.name"
             type="newType"/>
       <resolver
-            class="org.eclipse.jdt.postfixcompletion.core.ActualTypeResolver"
+            class="org.eclipse.jdt.postfixcompletion.resolver.ActualTypeResolver"
             contextTypeId="postfix"
             description="Resolves a variable to the actual type. If no variable is given, the variable resolves to java.lang.Object."
             name="newActualType"

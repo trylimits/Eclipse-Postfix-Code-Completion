@@ -1,5 +1,6 @@
-package org.eclipse.jdt.postfixcompletion.core;
+package org.eclipse.jdt.postfixcompletion.resolver;
 
+import org.eclipse.jdt.postfixcompletion.core.JavaStatementPostfixContext;
 import org.eclipse.jface.text.templates.SimpleTemplateVariableResolver;
 import org.eclipse.jface.text.templates.TemplateContext;
 

@@ -1,4 +1,4 @@
-package org.eclipse.jdt.postfixcompletion.core;
+package org.eclipse.jdt.postfixcompletion.resolver;
 
 import java.util.List;
 
