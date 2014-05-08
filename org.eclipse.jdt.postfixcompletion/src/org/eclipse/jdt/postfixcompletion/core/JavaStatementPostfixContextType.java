@@ -16,10 +16,11 @@ public class JavaStatementPostfixContextType extends AbstractJavaContextType {
 	
 	public JavaStatementPostfixContextType() {
 		this.addResolver(new GlobalTemplateVariables.Cursor());
-		this.addResolver(new OuterExpressionResolver());
+//		this.addResolver(new OuterExpressionResolver());
 		this.addResolver(new InnerExpressionResolver());
-		this.addResolver(new InnerExpressionTypeResolver());
+//		this.addResolver(new InnerExpressionTypeResolver());
 		this.addResolver(new Index());
+		// TODO Add other resolvers which could be useful or inherit from a class which already includes all needed resolvers
 	}
 	
 	/* (non-Javadoc)

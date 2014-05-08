@@ -9,20 +9,24 @@ import org.eclipse.jdt.internal.ui.text.template.contentassist.MultiVariable;
 import org.eclipse.jface.text.templates.TemplateContext;
 import org.eclipse.jface.text.templates.TemplateVariable;
 
+/**
+ * This class is an extension to the existing {@link TypeResolver} and allows the given parameter
+ * to be another variable, i.e. <code>${n:newType(another_variable)}</code>.
+ */
 @SuppressWarnings("restriction")
 public class CustomTypeResolver extends TypeResolver {
 
 	@Override
 	public void resolve(TemplateVariable variable, TemplateContext context) {
 		List<String> params= variable.getVariableType().getParams();
-		String param;
 		if (params.size() != 0 && context instanceof JavaContext) {
-			param = params.get(0);
-			JavaContext jc= (JavaContext) context;
-			TemplateVariable ref= jc.getTemplateVariable(param);
+			String param = params.get(0);
+			JavaContext jc = (JavaContext) context;
+			TemplateVariable ref = jc.getTemplateVariable(param);
 			MultiVariable mv= (MultiVariable) variable;
+			
 			if (ref instanceof JavaVariable) {
-				// reference is another variable
+				// Reference is another variable
 				JavaVariable refVar= (JavaVariable) ref;
 				jc.addDependency(refVar, mv);
 				

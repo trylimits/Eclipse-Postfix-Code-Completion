@@ -17,6 +17,10 @@ public class PostfixTemplateProposal extends TemplateProposal {
 		super(template, context, region, image);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jdt.internal.ui.text.template.contentassist.TemplateProposal#getReplaceOffset()
+	 */
 	@Override
 	protected int getReplaceOffset() {
 		if (getContext() instanceof JavaStatementPostfixContext) {
@@ -25,6 +29,10 @@ public class PostfixTemplateProposal extends TemplateProposal {
 		return super.getReplaceOffset();
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.jdt.internal.ui.text.template.contentassist.TemplateProposal#validate(org.eclipse.jface.text.IDocument, int, org.eclipse.jface.text.DocumentEvent)
+	 */
 	@Override
 	public boolean validate(IDocument document, int offset, DocumentEvent event) {
 		if (getContext() instanceof JavaStatementPostfixContext) {

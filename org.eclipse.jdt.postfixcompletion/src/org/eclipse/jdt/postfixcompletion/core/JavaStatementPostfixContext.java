@@ -27,10 +27,18 @@ import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.templates.Template;
 import org.eclipse.jface.text.templates.TemplateContextType;
 
+/**
+ * This class is an extension to the existing {@link JavaContext} and includes/provides additional information
+ * on the current node which the code completion was invoked on.
+ * <br/>
+ * <br/>
+ * TODO Atm this class is dependent on non-published changes of the class {@link JavaContext}.
+ */
 @SuppressWarnings("restriction")
 public class JavaStatementPostfixContext extends JavaContext {
 
-	private static final Object CONTEXT_TYPE_ID = "postfix";
+	private static final Object CONTEXT_TYPE_ID = "postfix"; //$NON-NLS-1$
+	private static final String OBJECT_SIGNATURE = "java.lang.Object"; //$NON-NLS-1$
 	
 	protected ASTNode currentNode;
 	protected ASTNode parentNode;
@@ -76,13 +84,13 @@ public class JavaStatementPostfixContext extends JavaContext {
 		if (currentNode == null) // We can evaluate to true only if we have a valid inner expression
 			return false;
 		
-		if ( template.getName().toLowerCase()
-				.startsWith(getPrefixKey().toLowerCase()) == false) {
+		if (template.getName().toLowerCase().startsWith(getPrefixKey().toLowerCase()) == false) {
 			return false;
 		}
 		
 		// We check if the template make "sense" by checking the requirements for the template
 		// For this purpose we have to resolve the inner_expression variable of the template
+		// This approach is much faster then delegating this to the existing TemplateTranslator class
 		String regex = ("\\$\\{([a-zA-Z]+):inner_expression\\(([^\\$|\\{|\\}]*)\\)\\}");
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(template.getPattern());
@@ -100,13 +108,19 @@ public class JavaStatementPostfixContext extends JavaContext {
 		
 		return result;
 	}
-	
-	
-//	
-//	private boolean stringToBoolean(String input) {
-//		return "true".equalsIgnoreCase(input);
-//	}
 
+	/**
+	 * Returns the current prefix of the key which was typed in.
+	 * <br/>
+	 * Examples:
+	 * <code>
+	 * <br/>
+	 * new Object().		=> getPrefixKey() returns ""
+	 * new Object().a		=> getPrefixKey() returns "a"
+	 * new object().asdf	=> getPrefixKey() returns "asdf"
+	 * 
+	 * @return an empty string or a string which represents the prefix of the key which was typed in
+	 */
 	protected String getPrefixKey() {
 		IDocument document = getDocument();
 		int start = getCompletionOffset();
@@ -127,22 +141,31 @@ public class JavaStatementPostfixContext extends JavaContext {
 		return getCompletionOffset();
 	}
 
+	
 	public String getOuterExpression() {
-
-		return ""; // TODO
+		return ""; // TODO This method is not used anymore
 	}
 	
-	private int getNodeBegin(ASTNode node) {
+	/**
+	 * Calculates the beginning position of a given {@link ASTNode}
+	 * @param node
+	 * @return
+	 */
+	protected int getNodeBegin(ASTNode node) {
 		if (node instanceof NameReference) {
 			return ((NameReference) node).sourceStart;
 		} else if (node instanceof FieldReference) {
 			return ((FieldReference) node).receiver.sourceStart;
 		} else if (node instanceof MessageSend) {
-			return ((MessageSend)node).receiver.sourceStart;
+			return ((MessageSend) node).receiver.sourceStart;
 		}
 		return node.sourceStart;
 	}
 	
+	/**
+	 * Returns the {@link Region} which represents the source region of the affected statement.
+	 * @return
+	 */
 	public Region getAffectedSourceRegion() {
 		int start = getNodeBegin(currentNode);
 		return new Region(start, (getCompletionOffset() - getPrefixKey().length()) - start - 1);
@@ -157,7 +180,13 @@ public class JavaStatementPostfixContext extends JavaContext {
 		return "";
 	}
 	
-	public boolean isNodeResolvingTo(ASTNode node, String signature) {
+	/**
+	 * Returns true if the type or one of its supertypes of a given {@link ASTNode} resolves to a given signature.
+	 * @param node an ASTNode
+	 * @param signature a fully qualified type
+	 * @return true if the type of the given ASTNode itself or one of its superclass/superinterfaces resolves to the given signature. false otherwise.
+	 */
+	protected boolean isNodeResolvingTo(ASTNode node, String signature) {
 		if (signature == null || signature.trim().length() == 0) {
 			return true;
 		}
@@ -174,6 +203,12 @@ public class JavaStatementPostfixContext extends JavaContext {
 		return true;
 	}
 	
+	/**
+	 * This is a recursive method which performs a depth first search in the inheritance tree of the given {@link TypeBinding}.
+	 * @param sb a TypeBinding
+	 * @param signature a fully qualified type
+	 * @return true if the given TypeBinding itself or one of its superclass/superinterfaces resolves to the given signature. false otherwise.
+	 */
 	private boolean resolvesReferenceBindingTo(TypeBinding sb, String signature) {
 		if (sb == null) {
 			return false;
@@ -192,19 +227,19 @@ public class JavaStatementPostfixContext extends JavaContext {
 		return result;
 	}
 	
-	public boolean resolvesReferenceBindingToArray(TypeBinding sb) {
+	protected boolean resolvesReferenceBindingToArray(TypeBinding sb) {
 		return sb instanceof ArrayBinding;
 	}
 	
-	public boolean isNodePrimitiveType(ASTNode node) {
-		return true;
+	protected boolean isNodeOfBaseType(ASTNode node) {
+		return !isNodeResolvingTo(node, OBJECT_SIGNATURE);
 	}
 	
-	public boolean isNodeBooleanExpression(ASTNode node) {
-		return true;
+	protected boolean isNodeBooleanExpression(ASTNode node) {
+		return isNodeResolvingTo(node, "boolean");
 	}
 	
-	private Binding resolveNodeToBinding(ASTNode node) {
+	protected Binding resolveNodeToBinding(ASTNode node) {
 		if (node instanceof NameReference) {
     		NameReference nr = (NameReference) node;
 			if (nr.binding instanceof VariableBinding) {
@@ -218,15 +253,20 @@ public class JavaStatementPostfixContext extends JavaContext {
 		return null;
 	}
 
-	private String resolveNodeToTypeString(ASTNode node) {
+	protected String resolveNodeToTypeString(ASTNode node) {
 		Binding b = resolveNodeToBinding(node);
 		if (b != null) {
 			return new String(b.readableName());
 		}
-		return "java.lang.Object";
+		return OBJECT_SIGNATURE;
 	}
 	
-	public String getInnerExpressionType() {
+	/**
+	 * Returns the fully qualified name the node of the current code completion invocation resolves to.
+	 * 
+	 * @return a fully qualified type signature or the name of the base type.
+	 */
+	public String getInnerExpressionTypeSignature() {
 		return resolveNodeToTypeString(currentNode);
 	}
 }
