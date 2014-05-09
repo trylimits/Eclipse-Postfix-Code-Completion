@@ -32,7 +32,7 @@ public class PostfixTemplateProposal extends TemplateProposal {
 	protected int getReplaceOffset() {
 		int result = super.getReplaceOffset();
 		if (getContext() instanceof JavaStatementPostfixContext) {
-			result -= ((JavaStatementPostfixContext)getContext()).getAffectedSourceRegion().getLength();
+			result -= ((JavaStatementPostfixContext)getContext()).getAffectedSourceRegion().getLength() + 1;
 		}
 		return result;
 	}
