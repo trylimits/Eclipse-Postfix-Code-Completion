@@ -12,6 +12,8 @@ import org.eclipse.jface.text.templates.TemplateVariable;
 /**
  * This class is responsible for resolving a given type or the type of another variable to its
  * actual type.
+ * 
+ * TODO Maybe <code>ActualType</code> is not the best term in this context.
  */
 @SuppressWarnings("restriction")
 public class ActualTypeResolver extends TypeResolver {
@@ -54,7 +56,12 @@ public class ActualTypeResolver extends TypeResolver {
 						// The given parameter is already an actual type 
 					}
 					
-					String reference = jc.addImport(param); // TODO Check if addImport(..) works correctly in cases of param == List<Integer>
+					// TODO Check if addImport(..) works correctly in cases of param == java.util.List<java.lang.String>?! No, it does not :(
+					// Will not work in the following scenarios:
+					// actual type is something like java.util.List<java.lang.String> will lead to an output of List<java.lang.String>
+					// We will have to analyze the param string for all types and call addImport(..) for each single type
+					// and then replace all the occurrences in the param string
+					String reference = jc.addImport(param); 
 					mv.setValue(reference);
 					mv.setUnambiguous(true);
 		

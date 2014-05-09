@@ -9,6 +9,13 @@ import org.eclipse.jface.text.templates.Template;
 import org.eclipse.jface.text.templates.TemplateContext;
 import org.eclipse.swt.graphics.Image;
 
+/**
+ * This is an extension to the existing {@link TemplateProposal} class.
+ * <br/>
+ * The class overrides the methods {@link #getReplaceEndOffset()} and {@link #validate(IDocument, int, DocumentEvent)} to
+ * allow replacement of existing code input and fixes a bug in the {@link TemplateProposal#validate(IDocument, int, DocumentEvent)} method. The <code>validate(..)</code> method
+ * in the super implementation should not use {@link #getReplaceEndOffset()} to determine the prefix of the typed in template name.
+ */
 @SuppressWarnings("restriction")
 public class PostfixTemplateProposal extends TemplateProposal {
 
@@ -23,10 +30,11 @@ public class PostfixTemplateProposal extends TemplateProposal {
 	 */
 	@Override
 	protected int getReplaceOffset() {
+		int result = super.getReplaceOffset();
 		if (getContext() instanceof JavaStatementPostfixContext) {
-			return ((JavaStatementPostfixContext)getContext()).getAffectedSourceRegion().getOffset();
+			result -= ((JavaStatementPostfixContext)getContext()).getAffectedSourceRegion().getLength();
 		}
-		return super.getReplaceOffset();
+		return result;
 	}
 	
 	/*

@@ -69,33 +69,38 @@ public class PostfixCompletionProposalComputer extends AbstractTemplateCompletio
 					|| ((tokenLocation & CompletionContext.TL_MEMBER_START) != 0 && tokenKind == CompletionContext.TOKEN_KIND_NAME && tokenStart > -1)
 					|| (tokenLocation == 0 && isAfterDot(context.getDocument(), context.getInvocationOffset()))) {
 				
-				// Fetch the information of the InternalCompletionContext and update our template engine
-		        if (coreContext instanceof InternalCompletionContext && ((InternalCompletionContext)coreContext).isExtended()) {
-		            updateTemplateEngine((InternalCompletionContext)coreContext);
-		            
-		        } else if (coreContext instanceof InternalCompletionContext && ((InternalCompletionContext)coreContext).isExtended() == false) {
-		        	// If the coreContext is not extended atm for some reason we have to extend it ourself in order to the needed information
-		        	final ICompilationUnit cu = context.getCompilationUnit();
-	                final CompletionProposalCollector collector = new CompletionProposalCollector(cu) {
-	                    @Override
-	                    public void acceptContext(final CompletionContext context) {
-	                        super.acceptContext(context);
-	                        updateTemplateEngine((InternalCompletionContext) context);
-	                    }
-	                };
-	                collector.setInvocationContext(context);
-	                collector.setRequireExtendedContext(true);
-	                try {
-	                    cu.codeComplete(context.getInvocationOffset(), collector);
-	                } catch (JavaModelException e) {
-	                	
-	                }
-		        }
+				analyzeCoreContext(context, coreContext);
 		        					
 				return postfixCompletionTemplateEngine;
 			}
 		}
 		return null;
+	}
+
+	private void analyzeCoreContext(JavaContentAssistInvocationContext context,
+			CompletionContext coreContext) {
+		// Fetch the information of the InternalCompletionContext and update our template engine
+		if (coreContext instanceof InternalCompletionContext && ((InternalCompletionContext)coreContext).isExtended()) {
+		    updateTemplateEngine((InternalCompletionContext)coreContext);
+		    
+		} else if (coreContext instanceof InternalCompletionContext && ((InternalCompletionContext)coreContext).isExtended() == false) {
+			// If the coreContext is not extended atm for some reason we have to extend it ourself in order to the needed information
+			final ICompilationUnit cu = context.getCompilationUnit();
+		    final CompletionProposalCollector collector = new CompletionProposalCollector(cu) {
+		        @Override
+		        public void acceptContext(final CompletionContext context) {
+		            super.acceptContext(context);
+		            updateTemplateEngine((InternalCompletionContext) context);
+		        }
+		    };
+		    collector.setInvocationContext(context);
+		    collector.setRequireExtendedContext(true);
+		    try {
+		        cu.codeComplete(context.getInvocationOffset(), collector);
+		    } catch (JavaModelException e) {
+		    	
+		    }
+		}
 	}
 	
 	private void updateTemplateEngine(InternalCompletionContext context) {

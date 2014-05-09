@@ -5,7 +5,6 @@ import org.eclipse.jdt.internal.compiler.ast.ASTNode;
 import org.eclipse.jdt.internal.corext.template.java.AbstractJavaContextType;
 import org.eclipse.jdt.internal.corext.template.java.CompilationUnitContext;
 import org.eclipse.jdt.internal.corext.template.java.JavaContext;
-import org.eclipse.jdt.internal.corext.template.java.NameResolver;
 import org.eclipse.jdt.postfixcompletion.resolver.InnerExpressionResolver;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.Position;

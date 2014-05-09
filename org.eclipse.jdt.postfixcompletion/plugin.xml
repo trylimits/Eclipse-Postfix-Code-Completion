@@ -2,6 +2,14 @@
 <?eclipse version="3.4"?>
 <plugin>
 
+	<!--
+		TODO s in here:
+		1. Add more basic resolvers 
+		2. Externalize the strings
+		3. Check how we can access ext strings like %templates.java.resolvers.Type.description
+	-->
+		
+
 	<extension point="org.eclipse.jdt.ui.javaCompletionProposalComputer"
 	   			id="postfix_completion"
 	   			name="Postfix Completion">
@@ -54,7 +62,8 @@
             	name="newActualType"
             	type="newActualType"/>
 	</extension>
-  <!--
+  <!-- 
+  XXX Should not be neccessary
   <extension
 		point="org.eclipse.jdt.ui.javaCompletionProposalSorters">
 		<proposalSorter

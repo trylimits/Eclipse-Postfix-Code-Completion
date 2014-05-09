@@ -10,8 +10,15 @@ import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.templates.Template;
 import org.eclipse.jface.text.templates.TemplateContextType;
+import org.eclipse.jface.text.templates.TemplateProposal;
 import org.eclipse.swt.graphics.Point;
 
+/**
+ * This is an extension to the existing {@link TemplateEngine} and is responsible for the creation of the {@link JavaStatementPostfixContext} instance.
+ * TODO If the super implementation of the {@link TemplateEngine#complete(ITextViewer, int, ICompilationUnit)} is rewritten and the creation of the context and {@link TemplateProposal} is
+ * externalized to its own method we can get rid of the code duplication in the <code>complete(..)</code> method. 
+ *
+ */
 @SuppressWarnings("restriction")
 public class PostfixTemplateEngine extends TemplateEngine {
 	
