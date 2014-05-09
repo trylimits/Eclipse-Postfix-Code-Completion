@@ -2,8 +2,10 @@ package org.eclipse.jdt.postfixcompletion.core;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,8 +42,12 @@ public class JavaStatementPostfixContext extends JavaContext {
 	private static final Object CONTEXT_TYPE_ID = "postfix"; //$NON-NLS-1$
 	private static final String OBJECT_SIGNATURE = "java.lang.Object"; //$NON-NLS-1$
 	
-	protected ASTNode currentNode;
-	protected ASTNode parentNode;
+	protected ASTNode currentCompletionNode;
+	protected ASTNode currentCompletionNodeParent;
+	
+	protected Map<ASTNode, Region> nodeRegions;
+	
+	protected ASTNode selectedNode;
 
 	public JavaStatementPostfixContext(TemplateContextType type,
 			IDocument document, final int completionOffset, int completionLength,
@@ -64,8 +70,25 @@ public class JavaStatementPostfixContext extends JavaContext {
 			ASTNode currentNode,
 			ASTNode parentNode) {
 		super(type, document, offset, length, compilationUnit);
-		this.currentNode = currentNode;
-		this.parentNode = parentNode;
+		
+		this.nodeRegions = new HashMap<>();
+		
+		this.currentCompletionNode = currentNode;
+		nodeRegions.put(currentNode, calculateNodeRegion(currentNode));
+
+		this.currentCompletionNodeParent = parentNode;
+		nodeRegions.put(parentNode, calculateNodeRegion(parentNode));
+		
+		this.selectedNode = currentNode;
+	}
+	
+	private Region calculateNodeRegion(ASTNode node) {
+		if (node == null) {
+			return new Region(0, 0);
+		}
+		int start = getNodeBegin(node);
+		int end = getCompletionOffset() - getPrefixKey().length() - start - 1;
+		return new Region(start, end);
 	}
 
 	/*
@@ -81,7 +104,7 @@ public class JavaStatementPostfixContext extends JavaContext {
 		if (fForceEvaluation)
 			return true;
 		
-		if (currentNode == null) // We can evaluate to true only if we have a valid inner expression
+		if (selectedNode == null) // We can evaluate to true only if we have a valid inner expression
 			return false;
 		
 		if (template.getName().toLowerCase().startsWith(getPrefixKey().toLowerCase()) == false) {
@@ -101,7 +124,7 @@ public class JavaStatementPostfixContext extends JavaContext {
 			String[] types = matcher.group(2).split(",");
 			for (String s : types) {
 				result = false;
-				if (this.isNodeResolvingTo(currentNode, s.trim()) == true) {
+				if (this.isNodeResolvingTo(selectedNode, s.trim()) == true) {
 					return true;
 				}
 			}
@@ -125,7 +148,7 @@ public class JavaStatementPostfixContext extends JavaContext {
 	protected String getPrefixKey() {
 		IDocument document = getDocument();
 		int start = getCompletionOffset();
-		int end = getEnd();
+		int end = getCompletionOffset();
 		try {
 			String temp = document.get(start, 1);
 			while (!".".equals(temp)) {
@@ -168,8 +191,7 @@ public class JavaStatementPostfixContext extends JavaContext {
 	 * @return
 	 */
 	public Region getAffectedSourceRegion() {
-		int start = getNodeBegin(currentNode);
-		return new Region(start, (getCompletionOffset() - getPrefixKey().length()) - start - 1);
+		return new Region(getCompletionOffset() - getPrefixKey().length() - nodeRegions.get(selectedNode).getLength() - 1, nodeRegions.get(selectedNode).getLength());
 	}
 	
 	public String getAffectedStatement() {
@@ -280,6 +302,6 @@ public class JavaStatementPostfixContext extends JavaContext {
 	 * @return a fully qualified type signature or the name of the base type.
 	 */
 	public String getInnerExpressionTypeSignature() {
-		return resolveNodeToTypeString(currentNode);
+		return resolveNodeToTypeString(selectedNode);
 	}
 }
