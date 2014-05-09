@@ -1,72 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <templates>
 
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.beg" context="postfix" deleted="false" description="Sets the cursor to the begin of the expression" enabled="true" name="beg">
-${}${inner_expression}${cursor}</template>
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.beg" context="postfix" deleted="false" description="Sets the cursor to the begin of the expression" enabled="true" name="beg">${}${inner_expression}${cursor}</template>
 	
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.cast" context="postfix" deleted="false" description="Casts the expression to a new type" enabled="true" name="cast">
-((${})${inner_expression})${cursor}</template>
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.cast" context="postfix" deleted="false" description="Casts the expression to a new type" enabled="true" name="cast">((${})${inner_expression})${cursor}</template>
 	
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.dowhile" context="postfix" deleted="false" description="Creates a do-while loop" enabled="true" name="dowhile">
-do {&#13;
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.dowhile" context="postfix" deleted="false" description="Creates a do-while loop" enabled="true" name="dowhile">do {&#13;
 	${cursor}&#13;
 } while (${i:inner_expression(boolean)});</template>
 	
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.else" context="postfix" deleted="false" description="Creates a negated if statement" enabled="true" name="else">
-if (!${i:inner_expression(boolean)}${}) {&#13;
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.else" context="postfix" deleted="false" description="Creates a negated if statement" enabled="true" name="else">if (!${i:inner_expression(boolean)}${}) {&#13;
 	${cursor}&#13;
 }</template>
 	
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.for" context="postfix" deleted="false" description="Creates a for statement" enabled="true" name="for">
-for (${type:newActualType(i)} ${n:newName(i)} : ${i:inner_expression(java.lang.Iterable,array)}) {&#13;
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.for" context="postfix" deleted="false" description="Creates a for statement" enabled="true" name="for">for (${type:newActualType(i)} ${n:newName(i)} : ${i:inner_expression(java.lang.Iterable,array)}) {&#13;
 	${cursor}&#13;
 }</template>
 
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.fori" context="postfix" deleted="false" description="Creates a for statement which iterates over an array" enabled="true" name="fori">
-for (int ${index} = 0; i &lt; ${i:inner_expression(array)}.length; ${index}++) {&#13;
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.fori" context="postfix" deleted="false" description="Creates a for statement which iterates over an array" enabled="true" name="fori">for (int ${index} = 0; i &lt; ${i:inner_expression(array)}.length; ${index}++) {&#13;
 	${cursor}&#13;
 }</template>
 
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.forr" context="postfix" deleted="false" description="Creates a for statement which iterates over an array in reverse order" enabled="true" name="forr">
-for (int ${index} = ${i:inner_expression(array)}.length - 1; i &gt;= 0; ${index}--) {&#13;
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.forr" context="postfix" deleted="false" description="Creates a for statement which iterates over an array in reverse order" enabled="true" name="forr">for (int ${index} = ${i:inner_expression(array)}.length - 1; i &gt;= 0; ${index}--) {&#13;
 	${cursor}&#13;
 }</template>
 
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.nnull" context="postfix" deleted="false" description="Creates an if statement and checks it the expression does not resolve to null" enabled="true" name="nnull">
-if (${i:inner_expression(java.lang.Object,array)} != null) {&#13;
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.nnull" context="postfix" deleted="false" description="Creates an if statement and checks it the expression does not resolve to null" enabled="true" name="nnull">if (${i:inner_expression(java.lang.Object,array)} != null) {&#13;
 	${cursor}&#13;
 }</template>
 
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.null" context="postfix" deleted="false" description="Creates an if statement which checks the expression if it resolves to null" enabled="true" name="null">
-if (${i:inner_expression(java.lang.Object,array)} == null) {&#13;
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.null" context="postfix" deleted="false" description="Creates an if statement which checks the expression if it resolves to null" enabled="true" name="null">if (${i:inner_expression(java.lang.Object,array)} == null) {&#13;
 	${cursor}&#13;
 }</template>
 
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.sif" context="postfix" deleted="false" description="Creates a short if statement" enabled="true" name="sif">
-((${i:inner_expression(boolean)}) ? ${} : ${cursor})</template>
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.sif" context="postfix" deleted="false" description="Creates a short if statement" enabled="true" name="sif">((${i:inner_expression(boolean)}) ? ${} : ${cursor})</template>
 
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.snnull" context="postfix" deleted="false" description="Creates an if statement which checks if the expression resolves not to null" enabled="true" name="snnull">
-(${i:inner_expression(java.lang.Object,array)} != null) ? ${inner_expression}${} : ${cursor}</template>
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.snnull" context="postfix" deleted="false" description="Creates an if statement which checks if the expression resolves not to null" enabled="true" name="snnull">(${i:inner_expression(java.lang.Object,array)} != null) ? ${inner_expression}${} : ${cursor}</template>
 
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.snull" context="postfix" deleted="false" description="Creates a short if statement which checks for null" enabled="true" name="snull">
-(${i:inner_expression(java.lang.Object,array)} == null) ? ${} : ${inner_expression}${cursor}</template>
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.snull" context="postfix" deleted="false" description="Creates a short if statement which checks for null" enabled="true" name="snull">(${i:inner_expression(java.lang.Object,array)} == null) ? ${} : ${inner_expression}${cursor}</template>
 
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.sysout" context="postfix" deleted="false" description="Sends the affected string to a System.out.println(..) call" enabled="true" name="sysout">
-System.out.println(${i:inner_expression(java.lang.String)}${});${cursor}</template>
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.sysout" context="postfix" deleted="false" description="Sends the affected string to a System.out.println(..) call" enabled="true" name="sysout">System.out.println(${i:inner_expression(java.lang.String)}${});${cursor}</template>
 
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.throw" context="postfix" deleted="false" description="Throws the given Exception" enabled="true" name="throw">
-throw ${true:inner_expression(java.lang.Throwable)};</template>
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.throw" context="postfix" deleted="false" description="Throws the given Exception" enabled="true" name="throw">throw ${true:inner_expression(java.lang.Throwable)};</template>
 
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.var" context="postfix" deleted="false" description="Creates a new variable" enabled="true" name="var">
-${field:newType(inner_expression)} ${var:newName(inner_expression)} = ${inner_expression};${cursor}</template>
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.var" context="postfix" deleted="false" description="Creates a new variable" enabled="true" name="var">${field:newType(inner_expression)} ${var:newName(inner_expression)} = ${inner_expression};${cursor}</template>
 
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.while" context="postfix" deleted="false" description="Creates a while loop" enabled="true" name="while">
-while (${i:inner_expression(boolean)}) {&#13;
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.while" context="postfix" deleted="false" description="Creates a while loop" enabled="true" name="while">while (${i:inner_expression(boolean)}) {&#13;
 	${cursor}&#13;
 }</template>
 
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.withinregion" context="postfix" deleted="false" description="Creates an if statement which checks if a given numeric variable is within a region" enabled="true" name="withinregion">
-if (${i:inner_expression(float,int,double,long)} &gt;= ${lower_bound} &amp;&amp; ${inner_expression} &lt;= ${upper_bound}) {&#13;
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.withinregion" context="postfix" deleted="false" description="Creates an if statement which checks if a given numeric variable is within a region" enabled="true" name="withinregion">if (${i:inner_expression(float,int,double,long)} &gt;= ${lower_bound} &amp;&amp; ${inner_expression} &lt;= ${upper_bound}) {&#13;
 	${cursor}&#13;
 }</template>
 

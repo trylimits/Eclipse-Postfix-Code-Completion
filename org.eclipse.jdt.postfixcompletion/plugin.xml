@@ -7,6 +7,7 @@
 		1. Add more basic resolvers 
 		2. Externalize the strings
 		3. Check how we can access ext strings like %templates.java.resolvers.Type.description
+		4. Add default template xml (DONE)
 	-->
 		
 
