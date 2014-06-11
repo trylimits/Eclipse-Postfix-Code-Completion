@@ -8,19 +8,19 @@ import org.eclipse.jdt.internal.corext.template.java.JavaContext;
 import org.eclipse.jdt.postfixcompletion.resolver.InnerExpressionResolver;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.Position;
-import org.eclipse.jface.text.templates.GlobalTemplateVariables;
 @SuppressWarnings("restriction")
 public class JavaStatementPostfixContextType extends AbstractJavaContextType {
 
 	public static final String ID_ALL = "postfix"; // $NON-NLS-1$
 	
 	public JavaStatementPostfixContextType() {
-		this.addResolver(new GlobalTemplateVariables.Cursor());
-//		this.addResolver(new OuterExpressionResolver());
+//		this.addResolver(new GlobalTemplateVariables.Cursor());
 		this.addResolver(new InnerExpressionResolver());
-//		this.addResolver(new InnerExpressionTypeResolver());
-		this.addResolver(new Index());
-		// TODO Add other resolvers which could be useful or inherit from a class which already includes all needed resolvers
+//		this.addResolver(new Index());
+//		this.addResolver(new ReturnType());
+		
+		// Add all resolvers from the Java contex type
+		initializeContextTypeResolvers();
 	}
 	
 	/* (non-Javadoc)
@@ -54,5 +54,5 @@ public class JavaStatementPostfixContextType extends AbstractJavaContextType {
 		initializeContext(javaContext);
 		return javaContext;
 	}
-	
+
 }
