@@ -70,7 +70,7 @@ public class PostfixCompletionProposalComputer extends AbstractTemplateCompletio
 					|| (tokenLocation == 0 && isAfterDot(context.getDocument(), context.getInvocationOffset()))) {
 				
 				analyzeCoreContext(context, coreContext);
-		        					
+
 				return postfixCompletionTemplateEngine;
 			}
 		}
