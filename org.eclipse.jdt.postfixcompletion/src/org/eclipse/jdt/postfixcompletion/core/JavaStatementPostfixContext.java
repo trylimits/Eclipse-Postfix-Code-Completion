@@ -1,6 +1,7 @@
 package org.eclipse.jdt.postfixcompletion.core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,7 +10,30 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.NamingConventions;
+import org.eclipse.jdt.core.Signature;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
+import org.eclipse.jdt.core.dom.ChildListPropertyDescriptor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.FileASTRequestor;
+import org.eclipse.jdt.core.dom.IBinding;
+import org.eclipse.jdt.core.dom.ITypeBinding;
+import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.NodeFinder;
+import org.eclipse.jdt.core.dom.ParameterizedType;
+import org.eclipse.jdt.core.dom.PrimitiveType;
+import org.eclipse.jdt.core.dom.Type;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.WildcardType;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jdt.internal.compiler.ast.ASTNode;
 import org.eclipse.jdt.internal.compiler.ast.FieldReference;
 import org.eclipse.jdt.internal.compiler.ast.MessageSend;
@@ -21,13 +45,22 @@ import org.eclipse.jdt.internal.compiler.lookup.ParameterizedTypeBinding;
 import org.eclipse.jdt.internal.compiler.lookup.ReferenceBinding;
 import org.eclipse.jdt.internal.compiler.lookup.TypeBinding;
 import org.eclipse.jdt.internal.compiler.lookup.VariableBinding;
+import org.eclipse.jdt.internal.corext.codemanipulation.StubUtility;
+import org.eclipse.jdt.internal.corext.dom.ASTNodeFactory;
+import org.eclipse.jdt.internal.corext.dom.ASTNodes;
 import org.eclipse.jdt.internal.corext.template.java.JavaContext;
+import org.eclipse.jdt.internal.ui.text.correction.ASTResolving;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.templates.Template;
+import org.eclipse.jface.text.templates.TemplateBuffer;
 import org.eclipse.jface.text.templates.TemplateContextType;
+import org.eclipse.jface.text.templates.TemplateException;
+import org.eclipse.jface.text.templates.TemplateVariable;
+import org.eclipse.text.edits.MalformedTreeException;
+import org.eclipse.text.edits.TextEdit;
 
 /**
  * This class is an extension to the existing {@link JavaContext} and includes/provides additional information
@@ -48,23 +81,27 @@ public class JavaStatementPostfixContext extends JavaContext {
 	protected Map<ASTNode, Region> nodeRegions;
 	
 	protected ASTNode selectedNode;
+	private boolean domInitialized;
+	private BodyDeclaration bodyDeclaration;
+	private org.eclipse.jdt.core.dom.ASTNode parentDeclaration;
+	
+	private Map<TemplateVariable, int[]> outOfRangeOffsets;
 
 	public JavaStatementPostfixContext(TemplateContextType type,
 			IDocument document, final int completionOffset, int completionLength,
 			ICompilationUnit compilationUnit) {
-		super(type, document, completionOffset, completionLength,
-				compilationUnit);
+		
+		this(type, document, completionOffset, completionLength, compilationUnit, null, null);
 	}
 
 	public JavaStatementPostfixContext(TemplateContextType type,
 			IDocument document, Position completionPosition,
 			ICompilationUnit compilationUnit) {
-		super(type, document, completionPosition, compilationUnit);
-
+		this(type, document, completionPosition.getOffset(), completionPosition.getLength(), compilationUnit, null, null);
 	}
 	
 	public JavaStatementPostfixContext(
-			JavaStatementPostfixContextType type,
+			TemplateContextType type,
 			IDocument document, int offset, int length,
 			ICompilationUnit compilationUnit,
 			ASTNode currentNode,
@@ -80,6 +117,8 @@ public class JavaStatementPostfixContext extends JavaContext {
 		nodeRegions.put(parentNode, calculateNodeRegion(parentNode));
 		
 		this.selectedNode = currentNode;
+		
+		outOfRangeOffsets = new HashMap<>();
 	}
 	
 	private Region calculateNodeRegion(ASTNode node) {
@@ -111,7 +150,7 @@ public class JavaStatementPostfixContext extends JavaContext {
 			return false;
 		}
 		
-		// We check if the template makes "sense" by checking the requirements/conditoins for the template
+		// We check if the template makes "sense" by checking the requirements/conditions for the template
 		// For this purpose we have to resolve the inner_expression variable of the template
 		// This approach is much faster then delegating this to the existing TemplateTranslator class
 		
@@ -139,9 +178,9 @@ public class JavaStatementPostfixContext extends JavaContext {
 	 * Examples:
 	 * <code>
 	 * <br/>
-	 * new Object().		=> getPrefixKey() returns ""
-	 * new Object().a		=> getPrefixKey() returns "a"
-	 * new object().asdf	=> getPrefixKey() returns "asdf"
+	 * new Object().		=> getPrefixKey() returns ""<br/>
+	 * new Object().a		=> getPrefixKey() returns "a"<br/>
+	 * new object().asdf	=> getPrefixKey() returns "asdf"<br/>
 	 * 
 	 * @return an empty string or a string which represents the prefix of the key which was typed in
 	 */
@@ -304,4 +343,232 @@ public class JavaStatementPostfixContext extends JavaContext {
 	public String getInnerExpressionTypeSignature() {
 		return resolveNodeToTypeString(selectedNode);
 	}
+	
+	/**
+	 * Adds a new field to the {@link AST} using the given type and variable name. The method
+	 * returns a {@link TextEdit} which can then be applied using the {@link #applyTextEdit(TextEdit)} method.
+	 * 
+	 * @param type
+	 * @param varName
+	 * @return a {@link TextEdit} which represents the changes which would be made, or <code>null</code> if the field
+	 * can not be created.
+	 */
+	public TextEdit addField(String type, String varName) {
+		
+		if (isReadOnly())
+			return null;
+
+		if (!domInitialized)
+			initDomAST();
+		
+		boolean isStatic = isBodyStatic();
+		int modifiers = Modifier.PRIVATE;
+		if (isStatic) {
+			modifiers |= Modifier.STATIC;
+		}
+		
+		ASTRewrite rewrite= ASTRewrite.create(parentDeclaration.getAST());
+		
+		VariableDeclarationFragment newDeclFrag = addFieldDeclaration(rewrite, parentDeclaration, modifiers, varName, type);
+
+		TextEdit te = rewrite.rewriteAST(getDocument(), null);
+		return te;
+	}
+	
+	private boolean isBodyStatic() {
+		boolean isAnonymous = parentDeclaration.getNodeType() == org.eclipse.jdt.core.dom.ASTNode.ANONYMOUS_CLASS_DECLARATION;
+		boolean isStatic = Modifier.isStatic(bodyDeclaration.getModifiers()) && !isAnonymous;
+		return isStatic;
+	}
+	
+	private void initDomAST() {
+		if (isReadOnly())
+			return;
+		
+		ASTParser parser= ASTParser.newParser(AST.JLS8);
+		parser.setSource(getCompilationUnit());
+		parser.setResolveBindings(true);
+		org.eclipse.jdt.core.dom.ASTNode domAst = parser.createAST(new NullProgressMonitor());
+		
+//		org.eclipse.jdt.core.dom.AST ast = domAst.getAST();
+		
+		NodeFinder nf = new NodeFinder(domAst, getCompletionOffset(), 1);
+		org.eclipse.jdt.core.dom.ASTNode cv = nf.getCoveringNode();
+		
+		bodyDeclaration = ASTResolving.findParentBodyDeclaration(cv);
+		parentDeclaration = ASTResolving.findParentType(cv);
+		domInitialized = true;
+	}
+
+	/**
+	 * Applies a {@link TextEdit} to the {@link IDocument} of this context and updates
+	 * the completion offset variable.
+	 * 
+	 * @param te {@link TextEdit} to apply
+	 * @return <code>true</code> if the method was successful, <code>false</code> otherwise
+	 */
+	public boolean applyTextEdit(TextEdit te) {
+		try {
+			te.apply(getDocument());
+			setCompletionOffset(getCompletionOffset() + ((te.getOffset() < getCompletionOffset()) ? te.getLength() : 0));
+			return true;
+		} catch (MalformedTreeException | BadLocationException e) {
+		
+		}
+		return false;
+	}
+		
+	private VariableDeclarationFragment addFieldDeclaration(ASTRewrite rewrite, org.eclipse.jdt.core.dom.ASTNode newTypeDecl, int modifiers, String varName, String qualifiedName) {
+
+		ChildListPropertyDescriptor property = ASTNodes.getBodyDeclarationsProperty(newTypeDecl);
+		List<BodyDeclaration> decls = ASTNodes.getBodyDeclarations(newTypeDecl);
+		AST ast = newTypeDecl.getAST();
+		
+		VariableDeclarationFragment newDeclFrag = ast.newVariableDeclarationFragment();
+		newDeclFrag.setName(ast.newSimpleName(varName));
+
+		FieldDeclaration newDecl = ast.newFieldDeclaration(newDeclFrag);
+		newDecl.setType(createType(Signature.createTypeSignature(qualifiedName, true), ast));
+		newDecl.modifiers().addAll(ASTNodeFactory.newModifiers(ast, modifiers));
+
+		int insertIndex = findFieldInsertIndex(decls, getCompletionOffset());
+		rewrite.getListRewrite(newTypeDecl, property).insertAt(newDecl, insertIndex, null);
+		
+		return newDeclFrag;
+	}
+	
+	private Type createType(String typeSig, AST ast) {
+		int sigKind = Signature.getTypeSignatureKind(typeSig);
+        switch (sigKind) {
+            case Signature.BASE_TYPE_SIGNATURE:
+                return ast.newPrimitiveType(PrimitiveType.toCode(Signature.toString(typeSig)));
+            case Signature.ARRAY_TYPE_SIGNATURE:
+                Type elementType = createType(Signature.getElementType(typeSig), ast);
+                return ast.newArrayType(elementType, Signature.getArrayCount(typeSig));
+            case Signature.CLASS_TYPE_SIGNATURE:
+                String erasureSig = Signature.getTypeErasure(typeSig);
+
+                String erasureName = Signature.toString(erasureSig);
+                if (erasureSig.charAt(0) == Signature.C_RESOLVED) {
+                    erasureName = addImport(erasureName);
+                }
+                
+                Type baseType= ast.newSimpleType(ast.newName(erasureName));
+                String[] typeArguments = Signature.getTypeArguments(typeSig);
+                if (typeArguments.length > 0) {
+                    ParameterizedType type = ast.newParameterizedType(baseType);
+                    List argNodes = type.typeArguments();
+                    for (int i = 0; i < typeArguments.length; i++) {
+                        String curr = typeArguments[i];
+                        if (containsNestedCapture(curr)) {
+                            argNodes.add(ast.newWildcardType());
+                        } else {
+                            argNodes.add(createType(curr, ast));
+                        }
+                    }
+                    return type;
+                }
+                return baseType;
+            case Signature.TYPE_VARIABLE_SIGNATURE:
+                return ast.newSimpleType(ast.newSimpleName(Signature.toString(typeSig)));
+            case Signature.WILDCARD_TYPE_SIGNATURE:
+                WildcardType wildcardType= ast.newWildcardType();
+                char ch = typeSig.charAt(0);
+                if (ch != Signature.C_STAR) {
+                    Type bound= createType(typeSig.substring(1), ast);
+                    wildcardType.setBound(bound, ch == Signature.C_EXTENDS);
+                }
+                return wildcardType;
+            case Signature.CAPTURE_TYPE_SIGNATURE:
+                return createType(typeSig.substring(1), ast);
+        }
+        
+        return ast.newSimpleType(ast.newName("java.lang.Object"));
+	}
+	
+	private boolean containsNestedCapture(String signature) {
+        return signature.length() > 1 && signature.indexOf(Signature.C_CAPTURE, 1) != -1;
+    }
+	
+	private int findFieldInsertIndex(List<BodyDeclaration> decls, int currPos) {
+		for (int i = decls.size() - 1; i >= 0; i--) {
+			org.eclipse.jdt.core.dom.ASTNode curr = decls.get(i);
+			if (curr instanceof FieldDeclaration && currPos > curr.getStartPosition() + curr.getLength()) {
+				return i + 1;
+			}
+		}
+		return 0;
+	}
+	
+	public String[] suggestFieldName(String type, String[] excludes, boolean staticField) throws IllegalArgumentException {
+		int dim = 0;
+		while (type.endsWith("[]")) {
+			dim++;
+			type = type.substring(0, type.length() - 2);
+		}
+
+		IJavaProject project = getJavaProject();
+		
+		if (project != null)
+			return StubUtility.getVariableNameSuggestions((staticField) ? NamingConventions.VK_STATIC_FIELD : NamingConventions.VK_INSTANCE_FIELD, project, type, dim, Arrays.asList(excludes), true);
+
+		return new String[] {Signature.getSimpleName(type).toLowerCase()};
+	}
+	
+	public String[] suggestFieldName(String type) {
+		if (!domInitialized) {
+			initDomAST();
+		}
+		if (domInitialized) {
+			return suggestFieldName(type, ASTResolving.getUsedVariableNames(bodyDeclaration), isBodyStatic());
+		}
+		// If the dom is not initialized yet (template preview) we return a dummy name
+		return new String[] { "newField" };
+	}
+	
+	public void registerOutOfRangeOffset(TemplateVariable var, int absoluteOffset) {
+		if (outOfRangeOffsets.get(var) == null) {
+			outOfRangeOffsets.put(var, new int[] { absoluteOffset });
+		} else {
+			int[] temp = outOfRangeOffsets.get(var);
+			int[] newArr = new int[temp.length + 1];
+			System.arraycopy(temp, 0, newArr, 0, temp.length);
+			newArr[temp.length] = absoluteOffset;
+			outOfRangeOffsets.put(var, newArr);
+		}
+	}
+
+	public int[] getVariableOutOfRangeOffsets(TemplateVariable variable) {
+		return outOfRangeOffsets.get(variable);
+	}
+	
+	@Override
+	public TemplateBuffer evaluate(Template template)
+			throws BadLocationException, TemplateException {
+		
+		TemplateBuffer result = super.evaluate(template);
+		
+		// After the template buffer has been created we are able to add out of range offsets
+		// This is not possible beforehand as it will result in an exception!
+		for (TemplateVariable tv : result.getVariables()) {
+	            
+            int[] outOfRangeOffsets = this.getVariableOutOfRangeOffsets(tv);
+            
+            if (outOfRangeOffsets != null && outOfRangeOffsets.length > 0) {
+            	int[] offsets = tv.getOffsets();
+            	int[] newOffsets = new int[outOfRangeOffsets.length + offsets.length];
+            	
+            	System.arraycopy(offsets, 0, newOffsets, 0, offsets.length);
+
+            	for (int i = 0; i < outOfRangeOffsets.length; i++) {
+            		newOffsets[i + offsets.length] = outOfRangeOffsets[i]; // - getAffectedSourceRegion().getOffset();
+            	}
+            	
+            	tv.setOffsets(newOffsets);
+            }
+		}
+		
+		return result;
+	}
+	
 }

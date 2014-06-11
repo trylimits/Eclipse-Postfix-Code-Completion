@@ -65,6 +65,12 @@
             	description="Resolves a variable to the actual type. If no variable is given, the variable resolves to java.lang.Object."
             	name="newActualType"
             	type="newActualType"/>
+        <resolver
+            	class="org.eclipse.jdt.postfixcompletion.resolver.NewFieldResolver"
+            	contextTypeId="postfix"
+            	description="Creates a new field in the current context. The type of the new field can be specified by the given paramater."
+            	name="newField"
+            	type="newField"/>
 	</extension>
   <!-- 
   XXX Should not be neccessary
