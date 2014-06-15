@@ -53,4 +53,10 @@
 	${cursor}&#13;
 }</template>
 
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.field" context="postfix" deleted="false" description="Creates a new field" enabled="true" name="field">${field:newField(i)} = ${i:inner_expression};${cursor}</template>
+
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.constpriv" context="postfix" deleted="false" description="Creates a new private constant" enabled="true" name="constpriv">${n:newField(i, false, true, true, true)}${i:inner_expression(novalue)}${cursor}</template>
+
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.constpub" context="postfix" deleted="false" description="Creates a new public constant" enabled="true" name="constpub">${n:newField(i, true, true, true, true)}${i:inner_expression(novalue)}${cursor}</template>
+
 </templates>
