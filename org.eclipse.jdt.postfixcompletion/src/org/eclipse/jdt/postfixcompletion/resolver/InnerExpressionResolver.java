@@ -1,5 +1,7 @@
 package org.eclipse.jdt.postfixcompletion.resolver;
 
+import java.util.List;
+
 import org.eclipse.jdt.internal.corext.template.java.JavaVariable;
 import org.eclipse.jdt.postfixcompletion.core.JavaStatementPostfixContext;
 import org.eclipse.jface.text.templates.SimpleTemplateVariableResolver;
@@ -18,6 +20,10 @@ public class InnerExpressionResolver extends SimpleTemplateVariableResolver {
 	
 	public static final String INNER_EXPRESSION_VAR = "inner_expression"; //$NON-NLS-1$
 	
+	public static final String HIDE_FLAG = "novalue";
+	
+	public static final String[] FLAGS = { HIDE_FLAG };
+	
 	public InnerExpressionResolver() {
 		super(INNER_EXPRESSION_VAR, ""); // TODO Add description
 	}
@@ -34,7 +40,14 @@ public class InnerExpressionResolver extends SimpleTemplateVariableResolver {
 		if (context instanceof JavaStatementPostfixContext && variable instanceof JavaVariable) {
 			JavaStatementPostfixContext c = (JavaStatementPostfixContext) context;
 			JavaVariable jv = (JavaVariable) variable;
-			jv.setValue(resolve(context));
+			List<String> params = variable.getVariableType().getParams();
+			
+			if (!params.contains(HIDE_FLAG)) {
+				jv.setValue(resolve(context));
+			} else {
+				jv.setValues(new String[] { "", resolve(context) }); // We hide the value from the output
+			}
+			
 			jv.setParamType(c.getInnerExpressionTypeSignature());
 			jv.setResolved(true);
 			jv.setUnambiguous(true);
@@ -42,4 +55,5 @@ public class InnerExpressionResolver extends SimpleTemplateVariableResolver {
 		}
 		super.resolve(variable, context);
 	}
+	
 }
