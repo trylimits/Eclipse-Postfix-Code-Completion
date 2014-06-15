@@ -13,19 +13,14 @@ import java.util.regex.Pattern;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.IType;
-import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.NamingConventions;
 import org.eclipse.jdt.core.Signature;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.ChildListPropertyDescriptor;
-import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
-import org.eclipse.jdt.core.dom.FileASTRequestor;
-import org.eclipse.jdt.core.dom.IBinding;
-import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.NodeFinder;
 import org.eclipse.jdt.core.dom.ParameterizedType;
@@ -50,6 +45,7 @@ import org.eclipse.jdt.internal.corext.dom.ASTNodeFactory;
 import org.eclipse.jdt.internal.corext.dom.ASTNodes;
 import org.eclipse.jdt.internal.corext.template.java.JavaContext;
 import org.eclipse.jdt.internal.ui.text.correction.ASTResolving;
+import org.eclipse.jdt.postfixcompletion.resolver.InnerExpressionResolver;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.Position;
@@ -154,7 +150,7 @@ public class JavaStatementPostfixContext extends JavaContext {
 		// For this purpose we have to resolve the inner_expression variable of the template
 		// This approach is much faster then delegating this to the existing TemplateTranslator class
 		
-		String regex = ("\\$\\{([a-zA-Z]+):inner_expression\\(([^\\$|\\{|\\}]*)\\)\\}"); // TODO Review this regex
+		String regex = ("\\$\\{([a-zA-Z]+):" + InnerExpressionResolver.INNER_EXPRESSION_VAR + "\\(([^\\$|\\{|\\}]*)\\)\\}"); // TODO Review this regex
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(template.getPattern());
 		boolean result = true;
@@ -162,14 +158,23 @@ public class JavaStatementPostfixContext extends JavaContext {
 		while (matcher.find()) {
 			String[] types = matcher.group(2).split(",");
 			for (String s : types) {
-				result = false;
-				if (this.isNodeResolvingTo(selectedNode, s.trim()) == true) {
-					return true;
+				if (!arrayContains(InnerExpressionResolver.FLAGS, s)) {
+					result = false;
+					if (this.isNodeResolvingTo(selectedNode, s.trim()) == true) {
+						return true;
+					}
 				}
 			}
 	    }
 		
 		return result;
+	}
+	
+	private boolean arrayContains(Object[] array, Object o) {
+		for (Object a : array) {
+			if (a.equals(o)) return true;
+		}
+		return false;
 	}
 
 	/**
@@ -353,7 +358,7 @@ public class JavaStatementPostfixContext extends JavaContext {
 	 * @return a {@link TextEdit} which represents the changes which would be made, or <code>null</code> if the field
 	 * can not be created.
 	 */
-	public TextEdit addField(String type, String varName) {
+	public TextEdit addField(String type, String varName, boolean publicField, boolean staticField, boolean finalField, String value) {
 		
 		if (isReadOnly())
 			return null;
@@ -362,14 +367,17 @@ public class JavaStatementPostfixContext extends JavaContext {
 			initDomAST();
 		
 		boolean isStatic = isBodyStatic();
-		int modifiers = Modifier.PRIVATE;
-		if (isStatic) {
+		int modifiers = (!publicField) ? Modifier.PRIVATE : Modifier.PUBLIC;
+		if (isStatic || staticField) {
 			modifiers |= Modifier.STATIC;
+		}
+		if (finalField) {
+			modifiers |= Modifier.FINAL;
 		}
 		
 		ASTRewrite rewrite= ASTRewrite.create(parentDeclaration.getAST());
 		
-		VariableDeclarationFragment newDeclFrag = addFieldDeclaration(rewrite, parentDeclaration, modifiers, varName, type);
+		VariableDeclarationFragment newDeclFrag = addFieldDeclaration(rewrite, parentDeclaration, modifiers, varName, type, value);
 
 		TextEdit te = rewrite.rewriteAST(getDocument(), null);
 		return te;
@@ -418,7 +426,7 @@ public class JavaStatementPostfixContext extends JavaContext {
 		return false;
 	}
 		
-	private VariableDeclarationFragment addFieldDeclaration(ASTRewrite rewrite, org.eclipse.jdt.core.dom.ASTNode newTypeDecl, int modifiers, String varName, String qualifiedName) {
+	private VariableDeclarationFragment addFieldDeclaration(ASTRewrite rewrite, org.eclipse.jdt.core.dom.ASTNode newTypeDecl, int modifiers, String varName, String qualifiedName, String value) {
 
 		ChildListPropertyDescriptor property = ASTNodes.getBodyDeclarationsProperty(newTypeDecl);
 		List<BodyDeclaration> decls = ASTNodes.getBodyDeclarations(newTypeDecl);
@@ -426,15 +434,38 @@ public class JavaStatementPostfixContext extends JavaContext {
 		
 		VariableDeclarationFragment newDeclFrag = ast.newVariableDeclarationFragment();
 		newDeclFrag.setName(ast.newSimpleName(varName));
+		
+		Type type = createType(Signature.createTypeSignature(qualifiedName, true), ast);
+		
+		if (value != null && value.trim().length() > 0) {
+			Expression e = createExpression(value);
+			Expression ne = (Expression) org.eclipse.jdt.core.dom.ASTNode.copySubtree(ast, e);
+			newDeclFrag.setInitializer(ne);
+			
+		} else {
+			if (Modifier.isStatic(modifiers) && Modifier.isFinal(modifiers)) {
+				newDeclFrag.setInitializer(ASTNodeFactory.newDefaultExpression(ast, type, 0));
+			}
+		}
 
 		FieldDeclaration newDecl = ast.newFieldDeclaration(newDeclFrag);
-		newDecl.setType(createType(Signature.createTypeSignature(qualifiedName, true), ast));
+		newDecl.setType(type);
 		newDecl.modifiers().addAll(ASTNodeFactory.newModifiers(ast, modifiers));
 
-		int insertIndex = findFieldInsertIndex(decls, getCompletionOffset());
+		int insertIndex = findFieldInsertIndex(decls, getCompletionOffset(), modifiers);
 		rewrite.getListRewrite(newTypeDecl, property).insertAt(newDecl, insertIndex, null);
 		
 		return newDeclFrag;
+	}
+	
+	private Expression createExpression(String expr) {
+		ASTParser parser = ASTParser.newParser(AST.JLS8);
+		parser.setKind(ASTParser.K_EXPRESSION);
+		parser.setResolveBindings(true);
+		parser.setSource(expr.toCharArray());
+		
+		org.eclipse.jdt.core.dom.ASTNode astNode = parser.createAST(new NullProgressMonitor());
+		return (Expression) astNode;
 	}
 	
 	private Type createType(String typeSig, AST ast) {
@@ -490,17 +521,18 @@ public class JavaStatementPostfixContext extends JavaContext {
         return signature.length() > 1 && signature.indexOf(Signature.C_CAPTURE, 1) != -1;
     }
 	
-	private int findFieldInsertIndex(List<BodyDeclaration> decls, int currPos) {
+	private int findFieldInsertIndex(List<BodyDeclaration> decls, int currPos, int modifiers) {
 		for (int i = decls.size() - 1; i >= 0; i--) {
 			org.eclipse.jdt.core.dom.ASTNode curr = decls.get(i);
-			if (curr instanceof FieldDeclaration && currPos > curr.getStartPosition() + curr.getLength()) {
+			if (curr instanceof FieldDeclaration && currPos > curr.getStartPosition() + curr.getLength()
+					 && ((FieldDeclaration) curr).getModifiers() == modifiers) {
 				return i + 1;
 			}
 		}
 		return 0;
 	}
 	
-	public String[] suggestFieldName(String type, String[] excludes, boolean staticField) throws IllegalArgumentException {
+	public String[] suggestFieldName(String type, String[] excludes, boolean staticField, boolean finalField) throws IllegalArgumentException {
 		int dim = 0;
 		while (type.endsWith("[]")) {
 			dim++;
@@ -509,18 +541,27 @@ public class JavaStatementPostfixContext extends JavaContext {
 
 		IJavaProject project = getJavaProject();
 		
+		int namingConventions = 0;
+		if (staticField && finalField) {
+			namingConventions = NamingConventions.VK_STATIC_FINAL_FIELD;
+		} else if (staticField && !finalField) {
+			namingConventions = NamingConventions.VK_STATIC_FIELD;
+		} else {
+			namingConventions = NamingConventions.VK_INSTANCE_FIELD;
+		}
+		
 		if (project != null)
-			return StubUtility.getVariableNameSuggestions((staticField) ? NamingConventions.VK_STATIC_FIELD : NamingConventions.VK_INSTANCE_FIELD, project, type, dim, Arrays.asList(excludes), true);
+			return StubUtility.getVariableNameSuggestions(namingConventions, project, type, dim, Arrays.asList(excludes), true);
 
 		return new String[] {Signature.getSimpleName(type).toLowerCase()};
 	}
 	
-	public String[] suggestFieldName(String type) {
+	public String[] suggestFieldName(String type, boolean finalField, boolean forceStatic) {
 		if (!domInitialized) {
 			initDomAST();
 		}
 		if (domInitialized) {
-			return suggestFieldName(type, ASTResolving.getUsedVariableNames(bodyDeclaration), isBodyStatic());
+			return suggestFieldName(type, ASTResolving.getUsedVariableNames(bodyDeclaration), (forceStatic) ? forceStatic : isBodyStatic(), finalField);
 		}
 		// If the dom is not initialized yet (template preview) we return a dummy name
 		return new String[] { "newField" };
