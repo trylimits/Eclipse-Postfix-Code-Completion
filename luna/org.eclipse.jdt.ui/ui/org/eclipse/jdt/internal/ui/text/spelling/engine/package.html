@@ -1,0 +1,84 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="IBM">
+   <meta name="GENERATOR" content="Mozilla/4.51 [en] (WinNT; I) [Netscape]">
+   <title>Package-level Javadoc</title>
+</head>
+<body>
+Provides the core functionality for spell-checking documents
+<h2>
+Package Specification</h2>
+This package provides the interfaces for the notions of dictionary, edit distance, phonetic hash, 
+spell event and spell-check iterator. For most of these interfaces a default implementation 
+for english languages is provided. These implementations can be reused in custom dictionaries or 
+spell-check iterators, or replaced by more specialized algorithms for a particular group of languages.
+<h3>
+Spell Check Engine</h3>
+The central point to access the spell-checker functionality is the interface <tt>ISpellCheckEngine</tt>. 
+Implementations of this interface provide support for life-cycle management, registering and unregistering
+dictionaries, changing the locale of the engine and creating a spell-checker for a specific language.
+<p>
+The following steps are needed to obtain a spell-checker for a specific language:
+<ul>
+<li>Create an instance of <tt>ISpellCheckEngine</tt>. In this package, no default implementation is provided, 
+since the management of the dictionary registering and loading is application dependent. Usually, instances 
+of <tt>ISpellCheckEngine</tt> are implemented as singletons.</li>
+<li>Create the appropriate dictionaries that should be used during the spell-check process. All dictionaries that 
+can be registered with <tt>ISpellCheckEngine</tt> must implement the interface <tt>ISpellCheckDictionary</tt>. 
+For this interface, an abstract implementation is provided in the class <tt>AbstractSpellDictionary</tt>.
+Depending on the language of the words contained in this dictionary, custom algorithms for the phonetic hash
+ (<tt>IPhoneticHashProvider</tt>) and the edit distance (<tt>IPhoneticDistanceAlgorithm</tt>) should be implemented 
+ and registered with the dictionary.</li>
+ <li>Instances of spell-checkers can now be created by calling <tt>createSpellChecker(Locale)</tt>, where the locale 
+ denotes the language that the spell-checker should use while executing.</li>
+</ul>
+When requesting a new spell-checker with a different locale via <tt>createSpellChecker(Locale)</tt>, the spell-checker is 
+reconfigured with the new dictionaries. More concretely, the old dictionary is unregistered and a new one registered for the 
+desired locale is associated with the spell-checker. If no such dictionary is available, no spell-checker is returned and 
+the locale of the engine is reset to its default locale.
+<h3>
+Dictionaries</h3>
+Dictionaries are the data structures to hold word lists for a particular language. All implementations of dictionaries must 
+implement the interface <tt>ISpellDictionary</tt>. It provides support for life-cycle management as well as the facility to query 
+words from the list, add words to the list and get correction proposals for incorrectly spelt words.
+<p>
+This package provides a default implementation of a dictionary (<tt>AbstractSpellDictionary</tt>) that uses algorithms 
+convenient for english languages. <br>
+Every dictionary needs two kinds of algorithms to be plugged in:
+<ul>
+<li>An edit distance algorithm: Edit distance algorithms implement the interface <tt>IPhoneticDistanceAlgorithm</tt>. The algorithm 
+is used to determine the similarity between two words. This package provides a default implementation for languages using the latin alphabet (<tt>DefaultPhoneticDistanceAlgorithm</tt>). 
+The default algorithm uses the Levenshtein text edit distance.</li>
+<li>A hash algorithm: Phonetic hash providers implement the interface <tt>IPhoneticHashProvider</tt>. The purpose of 
+phonetic hashes is to have a representation of words which allows comparing it to other, similar words. This package provides a default 
+implementation which is convenient for slavic and english languages. It uses the double metaphone algorithm by published 
+Lawrence Philips.</li>
+</ul>
+By plugging in custom implementations of one or both of these algorithms the abstract implementation <tt>AbstractSpellDictionary</tt> can 
+be customized to specified languages and alphabets.
+<h3>
+Spell Check Iterators</h3>
+Instances of <tt>ISpellChecker</tt> are usually language-, locale- and medium independent implementations and therefore need an input provider. The 
+interface <tt>ISpellCheckIterator</tt> serves this purpose by abstracting the tokenizing of text media to a simple iteration. The actual spell-check process 
+is launched by calling <tt>ISpellChecker#execute(ISpellCheckIterator)</tt>. This method uses the indicated spell-check iterator to determine the 
+words that are to be spell-checked. This package provides no default implementation of a spell-check iterator.
+<h3>
+Event Handling</h3>
+To communicate the results of a spell-check pass, spell-checkers fire spell events that inform listeners about the status 
+of a particular word being spell-checked. Instances that are interested in receiving spell events must implement 
+the interface <tt>ISpellEventListener</tt> and register with the spell-checker before the spell-check process starts.<p>
+A spell event contains the following information:
+<ul>
+<li>The word being spell-checked</li>
+<li>The begin index of the current word in the text medium</li>
+<li>The end index in the text medium</li>
+<li>A flag whether this word was found in one of the registered dictionaries</li>
+<li>A flag that indicates whether this word starts a new sentence</li>
+<li>The set of proposals if the word was not correctly spelt. This information is lazily computed.</li>
+</ul>
+Spell event listeners are free to handle the events in any way. However, listeners are not allowed to block during 
+the event handling unless the spell-checking process happens in another thread.
+</body>
+</html>

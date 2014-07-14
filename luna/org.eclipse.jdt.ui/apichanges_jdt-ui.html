@@ -1,0 +1,240 @@
+<!DOCTYPE doctype PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  <meta name="Author" content="IBM">
+  <title>JDT UI Breaking API changes</title>
+  <link rel="stylesheet" href="http://dev.eclipse.org/default_style.css"
+ type="text/css">
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);">
+<font color="#8080ff" size="-2">java development tooling ui</font>
+<p>This document lists the breaking API changes that occurred between
+R3.3 and R3.4 and
+how to migrate from the R3.3 API to the R3.4 API.
+</p>
+<table border="0" cellpadding="2" cellspacing="5" width="100%" summary="Breaking API changes">
+  <tbody>
+    <tr>
+      <td align="left" width="72%"> <font size="+3"><b>jdt ui -
+Breaking API changes from R3.3 to R3.4</b></font> <br>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      None
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p> </p>
+<table border="0" cellpadding="2" cellspacing="5" width="100%" summary="Non-breaking API changes">
+  <tbody>
+    <tr>
+      <td align="left" width="72%"> <font size="+3"><b>jdt ui -
+Non-breaking API changes from R3.3 to R3.4</b></font> <br>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      Added API <code>org.eclipse.jdt.ui.actions.OpenNewPackageWizardAction.setConfiguredWizardPage(NewPackageWizardPage)</code>.
+      </td>
+    </tr>
+    <tr><td><hr></td></tr>
+    <tr>
+      <td>
+      Added constants for new refactorings:
+      <br>
+      Added to <code>org.eclipse.jdt.ui.actions.IJavaEditorActionDefinitionIds</code>:
+      <ul>
+      <li>INTRODUCE_PARAMETER_OBJECT</li>
+      <li>EXTRACT_CLASS</li>
+      </ul>
+      Added to <code>org.eclipse.jdt.ui.actions.JdtActionConstants</code>:
+      <ul>
+      <li>INTRODUCE_PARAMETER_OBJECT</li>
+      <li>EXTRACT_CLASS</li>
+      </ul>
+    </tr>
+    <tr><td><hr></td></tr>    
+    <tr>
+      <td>
+      Constants to <code>org.eclipse.jdt.ui.PreferenceConstants</code>:
+      <ul>
+      <li>SPELLING_IGNORE_JAVA_STRINGS</li>
+      <li>SPELLING_PROBLEMS_THRESHOLD</li>
+      </ul>
+    </tr>
+    <tr><td><hr></td></tr>    
+    <tr>
+      <td>
+      Added API to <code>org.eclipse.jdt.ui.PreferenceConstants</code>:
+      <ul>
+      <li>getExcludedCompletionProposalCategories()</li>
+      <li>setExcludedCompletionProposalCategories(..)</li>
+      </ul>
+    </tr>    
+    <tr><td><hr></td></tr>    
+    <tr>
+      <td>
+      Added API <code>org.eclipse.jdt.ui.JavaUI.getEditorInputTypeRoot(IEditorInput)</code></td>
+    </tr>
+    <tr><td><hr></td></tr>    
+    <tr>
+      <td>
+      <code>org.eclipse.jdt.ui.SharedASTProvider</code> gives access to the AST used by the active
+      Java editor
+      <ul>
+      <li>SharedASTProvider.getAST(ITypeRoot, SharedASTProvider.WAIT_FLAG, IProgressMonitor)</li>
+      </ul>
+      </td>
+    </tr>
+    <tr><td><hr></td></tr>    
+    <tr>
+      <td>
+      New extension point <code>javadocExportWizardPage</code> allows to add pages to the Javadoc export wizard
+      <ul>
+      <li>JavadocExportWizardPage is to be extended by contributors</li>
+      </ul>
+      </td>
+    </tr>
+    <tr><td><hr></td></tr>    
+    <tr>
+      <td>
+      Both new Java project wizard pages are now API. Clients
+      can reuse or modify the pages for their own New Java project wizards.
+      <ul>
+      <li>NewJavaProjectWizardPageOne (<code>org.eclipse.jdt.ui.wizards</code>)</li>
+      <li>NewJavaProjectWizardPageTwo (<code>org.eclipse.jdt.ui.wizards</code>)</li>
+      <li>OpenNewJavaProjectWizardAction.setConfiguredWizardPages(NewJavaProjectWizardPageOne, NewJavaProjectWizardPageTwo) (<code>org.eclipse.jdt.ui.actions</code>)
+      </ul>
+      </td>
+    </tr>
+    <tr><td><hr></td></tr>    
+    <tr>
+      <td>
+      New extension point <code>classpathFixProcessors</code> allows to add functionality to fix a project class path when a type can not be resolved. For example
+      PDE can add a plug-in dependency.
+      <ul>
+      <li>ClasspathFixProcessor is to be extended by contributors</li>
+      </ul>
+      </td>
+    </tr> 
+    <tr><td><hr></td></tr>    
+    <tr>
+      <td>
+      Added API for the JAR packager:
+      <ul>
+      <li>Added <code>org.eclipse.jdt.ui.jarpackager.IJarBuilder</code></li>
+      <li>Added methods to set and get jar builder in <code>org.eclipse.jdt.ui.jarpackager.JarPackageData</code></li>
+      <li>Added factories to create jar builders in <code>org.eclipse.jdt.ui.jarpackager.JarPackageData</code></li>
+      <li>Added methods to set and get launch configuration name in <code>org.eclipse.jdt.ui.jarpackager.JarPackageData</code></li>
+      <li>Added method <code>org.eclipse.jdt.ui.jarpackager.JarWriter3.addEntry(JarEntry, InputStream)</code></li>
+      </ul>
+      </td>
+    </tr>
+    <tr><td><hr></td></tr>    
+    <tr>
+      <td>
+      All occurrence actions available in for find occurrence. New actions and constants.
+      <ul>
+      <li>FindBreakContinueTargetOccurrencesAction</li>
+      <li>FindMethodExitOccurrencesAction</li>
+      <li>IJavaEditorActionDefinitionIds: SEARCH_METHOD_EXIT_OCCURRENCES, SEARCH_BREAK_CONTINUE_TARGET_OCCURRENCES</li>
+      <li>JdtActionConstants: FIND_METHOD_EXIT_OCCURRENCES, FIND_BREAK_CONTINUE_TARGET_OCCURRENCES</li>
+       </ul>
+      </td>
+    </tr>  
+    <tr><td><hr></td></tr>      
+    <tr>
+      <td>
+      Support for external class folder selection:
+      <ul>
+      <li>BuildPathDialogAccess.chooseExternalJAREntries(Shell)</li>
+      <li>BuildPathDialogAccess.configureExternalClassFolderEntries(Shell, IPath)</li>
+       </ul>
+      </td>
+    </tr>
+    <tr><td><hr></td></tr>      
+    <tr>
+      <td>
+      Support for styled text labels in <code>JavaElementLabels</code>:
+      <ul>
+      <li><code>COLORIZE</code>: Constant to signal that colors should be applied to labels</li>
+      <li><code>getStyledTextLabel(element, flags)</code>: Construct a styled text label for the given element</li>
+      <li><code>getStyledElementLabel(..)</code>: Construct a styled text label for the given Java element</li>
+      <li><code>getXYLabel(..)</code>: Construct a styled text label for the given tytpe, method, field ...</li>
+       </ul>
+      </td>
+    </tr>
+    <tr><td><hr></td></tr>
+    <tr>
+      <td>
+      Support for styled text labels in <code>JavaElementLabelProvider</code>:
+      <ul>
+      <li><code>JavaElementLabelProvider</code>now implements IStyledLabelProvider</li>
+       </ul>
+      </td>
+    </tr>
+    <tr><td><hr></td></tr>
+    <tr>
+      <td>
+      Support for styled text labels in <code>org.eclipse.jdt.ui.text.java.CompletionProposalLabelProvider</code>:
+      <ul>
+      <li><code>createStyledLabel(CompletionProposal)</code></li>
+       </ul>
+      </td>
+    </tr>    
+    <tr><td><hr></td></tr>      
+    <tr>
+      <td>
+      Made preference page ID for build path preferences pages API:
+      <ul>
+      <li><code>org.eclipse.jdt.ui.JavaUI#ID_USER_LIBRARY_PREFERENCE_PAGE</code></li>
+      <li><code>org.eclipse.jdt.ui.JavaUI#ID_CLASSPATH_VARIABLES_PREFERENCE_PAGE</code></li>
+      </ul>
+      </td>
+    </tr>
+    <tr><td><hr></td></tr>       
+    <tr>
+      <td>
+      Constants added for 'Show Breadcrumbs' action:
+      <ul>
+      <li><code>org.eclipse.jdt.ui.actions.IJavaEditorActionDefinitionIds#TOGGLE_BREADCRUMB</code></li>
+      <li><code>org.eclipse.jdt.ui.actions.IJavaEditorActionDefinitionIds#SHOW_IN_BREADCRUMB</code></li>
+      </ul>
+      </td>
+    </tr>
+    <tr><td><hr></td></tr>       
+    <tr>
+      <td>
+      All action groups now also accept a special selection provider on construction which is used instead of the
+	  page selection provider.      
+      <ul>
+      <li><code>BuildActionGroup</code></li>
+      <li><code>CCPActionGroup</code></li>
+      <li><code>DeclarationsSearchGroup</code></li>
+      <li><code>GenerateActionGroup</code></li>
+      <li><code>ImplementorsSearchGroup</code></li>
+      <li><code>JavaSearchActionGroup</code></li>
+      <li><code>NavigateActionGroup</code></li>
+      <li><code>OccurrencesSearchGroup</code></li>     
+      <li><code>OpenEditorActionGroup</code></li>
+      <li><code>ProjectActionGroup</code></li>
+      <li><code>ReadReferencesSearchGroup</code></li>
+      <li><code>RefactorActionGroup</code></li>
+      <li><code>ReferencesSearchGroup</code></li>
+      <li><code>WriteReferencesSearchGroup</code></li>
+      </ul>
+      </td>
+    </tr>    
+  </tbody>
+</table>
+<p>
+API changes from 3.2 to 3.3 can be found <a href="./notes/r3.3/apichanges_jdt-ui.html?view=co">here</a>.
+</p>
+<p> </p>
+</body>
+</html>
+

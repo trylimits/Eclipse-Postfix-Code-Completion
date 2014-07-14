@@ -1,0 +1,259 @@
+<!DOCTYPE doctype PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  <meta name="Author" content="IBM">
+  <title>JDT UI Breaking API changes</title>
+  <link rel="stylesheet" href="http://dev.eclipse.org/default_style.css"
+ type="text/css">
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);">
+<font color="#8080ff" size="-2">java development tooling ui</font>
+<p>This document lists the breaking API changes that occurred between
+R3.1 and R3.2 and
+how to migrate from the R3.1 API to the R3.2 API.
+</p>
+<table border="0" cellpadding="2" cellspacing="5" width="100%">
+  <tbody>
+    <tr>
+      <td align="left" width="72%"> <font size="+3"><b>jdt ui -
+Breaking API changes from R3.1 to R3.2</b></font> <br>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p> </p>
+<table border="0" cellpadding="2" cellspacing="5" width="100%">
+  <tbody>
+    <tr>
+      <td align="left" width="72%"> <font size="+3"><b>jdt ui -
+Non-breaking API changes from R3.1 to R3.2</b></font> <br>
+      </td>
+    </tr>
+    <tr>
+      <td>New and deprecated API in <code>org.eclipse.jdt.ui.JavadocContentAccess</code>:
+      <ul><li><code>getHTMLContentReader(IMember, boolean)</code> has been
+deprecated in favor of <code>getHTMLContentReader(IMember, boolean,
+boolean)</code> which allows to specify whether attached Javadoc should
+be respected.</li></ul> </td>
+    </tr>
+    <tr>
+      <td> New API added on JavaUI<br>
+      <ul>
+        <li>createPackageDialog(Shell parent, IRunnableContext
+context, IJavaSearchScope scope, boolean
+multipleSelection, boolean removeDuplicates, String filter)</li>
+        <li>getEditorInputJavaElement(IEditorInput)</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td> New API added to extend the 'open type' dialog
+      <ul>
+        <li> JavaUI.createTypeDialog(Shell, IRunnableContext,
+IJavaSearchScope, int, boolean, String, TypeSelectionExtension)
+(org.eclipse.jdt.ui.)</li>
+        <li>TypeSelectionExtension (org.eclipse.jdt.ui.dialogs)</li>
+        <li>ITypeInfoFilterExtension (org.eclipse.jdt.ui.dialogs)</li>
+        <li>ITypeInfoImageProvider (org.eclipse.jdt.ui.dialogs)</li>
+        <li>ITypeInfoRequestor (org.eclipse.jdt.ui.dialogs)</li>
+        <li>ITypeSelectionComponent (org.eclipse.jdt.ui.dialogs)</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>New API added to open wizards programmatically<br>
+      <ul>
+        <li>OpenNewAnnotationWizardAction (org.eclipse.jdt.ui.action)</li>
+        <li>OpenNewClassWizardAction (org.eclipse.jdt.ui.action)</li>
+        <li>OpenNewEnumWizardAction (org.eclipse.jdt.ui.action)</li>
+        <li>OpenNewInterfaceWizardAction (org.eclipse.jdt.ui.action)</li>
+        <li>OpenNewJavaProjectWizardAction (org.eclipse.jdt.ui.action)</li>
+        <li>OpenNewPackageWizardAction (org.eclipse.jdt.ui.action)</li>
+        <li>OpenNewSourceFolderWizardAction (org.eclipse.jdt.ui.action)</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>New API added on ISharedImages<br>
+      <ul>
+        <li>IMG_OBJS_CLASSPATH_VAR_ENTRY</li>
+        <li>IMG_OBJS_JAVADOCTAG</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">New API added on
+IPackagesViewPart<br>
+      <ul>
+        <li>isLinkingEnabled()</li>
+        <li>setLinkingEnabled(boolean)<br>
+        </li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>New API added on NewTypeWizardPage<br>
+      <ul>
+        <li>getCompilationUnitName(String)</li>
+        <li>accessors that return the input field labels can be overridden</li>
+         <ul>
+          <li>getPackageLabel()</li>
+          <li>getEnclosingTypeLabel()</li>
+          <li>getTypeNameLabel()</li>
+          <li>getModifiersLabel()</li>
+          <li>getSuperClassLabel()</li>
+          <li>getSuperInterfacesLabel()<br>
+          </li>
+        </ul>
+        <li>methods that open the selection dialogs can now be overridden</li>
+        <ul>
+          <li>choosePackage()</li>
+          <li>chooseEnclosingType()</li>
+          <li>chooseSuperClass()</li>
+          <li>chooseSuperInterfaces()<br>
+          </li>
+        </ul>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">New API added on
+NewContainerWizardPage<br>
+      <ul>
+        <li>accessors that return the input field labels can be overridden</li>
+        <ul>
+          <li>getContainerLabel()</li>
+        </ul>
+        <li>methods that open the selection dialogs can now be overridden</li>
+        <ul>
+          <li>chooseContainer()</li>
+        </ul>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>New API added on JavaCapabilityConfigurationPage<br>
+      <ul>
+        <li>createProject(IProject, URI locationURI, IProgressMonitor)</li>
+      </ul>
+Deprecated API<br>
+      <ul>
+        <li>createProject(IProject, IPath locationPath,
+IProgressMonitor)<br>
+        </li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>JDT action now support a pluggable selection provider so that
+the actions can also be used on non-Java elements<br>
+      <ul>
+        <li>New constructor SelectionDispatchAction(IWorkbenchSite
+site, ISelectionProvider provider)</li>
+        <li>New class</li>
+        <ul>
+          <li>ConvertingSelectionProvider</li>
+        </ul>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>New API to use the functionality of OverrideMethodsAction and
+AddUnimplementedConstructorsAction without UI.<br>
+      <ul>
+        <li>New method
+OverrideMethodsAction.createRunnable(CompilationUnit
+astRoot, ITypeBinding type, IMethodBinding[] methodToOverride, int
+insertPos, boolean createComments)</li>
+        <li>New method
+AddUnimplementedConstructorsAction.createRunnable(CompilationUnit
+astRoot,
+ITypeBinding type, IMethodBinding[] methodToOverride, int insertPos,
+boolean createComments, int visibility, boolean omitSuper)</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">New API to get a ImportRewrite
+configured with the JDT.UI preference settings.<br>
+      <ul>
+        <li>CodeStyleConfiguration.createImportRewrite(...)</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">New API on CodeGeneration
+      <ul>
+        <li>CodeGeneration.getTypeBody(...) and constants</li>
+      </ul>
+      </td>
+    </tr>
+     <tr>
+      <td style="vertical-align: top;">New API on JavaElementLabels
+      <ul>
+        <li>Constants added to show element categories</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">New API JarWriter3
+      <ul>
+        <li>JarWriter3 has been added to create JARs with refactoring scripts</li>
+      </ul>
+      </td>
+    </tr>    
+     <tr>
+      <td style="vertical-align: top;">New API for folding structure provider
+      <ul>
+        <li>IJavaFoldingStructureProviderExtension</li>
+        <li>DefaultJavaFoldingStructureProvider</li>
+      </ul>
+      </td>
+    </tr>
+         <tr>
+      <td style="vertical-align: top;">New actions added to give access to new functionality
+      <ul>
+        <li>GenerateHashCodeEqualsAction</li>
+        <li>IntroduceIndirectionAction</li>
+        <li>ReplaceInvocationsAction</li>
+      </ul>
+      </td>
+    </tr>     
+    <tr>
+      <td style="vertical-align: top;">New API to allow QuickFix and
+QuickAssist processors to work on (non-jdt.core) problems contributed
+by reconcile participants.<br>
+      <ul>
+        <li>Extensions of quickFixProcessors can now specify which
+marker types
+they can handle: new element &lt;handledMarkerTypes&gt;. Processors
+will only receive problems of specified types. If no handled marker
+type are specified, the processor will
+only get problems of types org.eclipse.jdt.core.problem,
+org.eclipse.jdt.core.buildpath_problem and org.eclipse.jdt.core.task;
+this is compatible to the behavior prior to 3.2.</li>
+        <li>New API added on IProblemLocation:
+IProblemLocation.getMarkerType() <br>
+        </li>
+        <li>For historical reasons, IQuickFixProcessor.hasCorrections
+only gets the problem ID, but not the problem marker type. The possible
+marker types are defined by the extension. To avoid any conflicts on
+the ID, extenders are recommended to implement a processor per marker
+type. <br>
+        </li>
+      </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>
+API changes from 3.0 to 3.1 can be found <a href="../r3.1/apichanges_jdt-ui.html?view=co">here</a>.
+</p>
+</body>
+</html>

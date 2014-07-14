@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.eclipse.jdt.postfixcompletion.feature_0.0.3.qualifier.jar" id="org.eclipse.jdt.postfixcompletion.feature" version="0.0.3.qualifier">
+      <category name="postfixCodeCompletion"/>
+   </feature>
+   <feature url="features/org.eclipse.jdt.postfixcompletion.luna.patch_0.0.1.qualifier.jar" id="org.eclipse.jdt.postfixcompletion.luna.patch" version="0.0.1.qualifier" patch="true">
+      <category name="postfixCodeCompletion"/>
+   </feature>
+   <category-def name="postfixCodeCompletion" label="Postfix Code Completion"/>
+</site>
