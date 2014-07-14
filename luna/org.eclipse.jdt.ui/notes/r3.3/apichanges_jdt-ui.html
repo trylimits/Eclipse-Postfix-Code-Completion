@@ -1,0 +1,234 @@
+<!DOCTYPE doctype PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  <meta name="Author" content="IBM">
+  <title>JDT UI Breaking API changes</title>
+  <link rel="stylesheet" href="http://dev.eclipse.org/default_style.css"
+ type="text/css">
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);">
+<font color="#8080ff" size="-2">java development tooling ui</font>
+<p>This document lists the breaking API changes that occurred between
+R3.2 and R3.3 and
+how to migrate from the R3.2 API to the R3.3 API.
+</p>
+<table border="0" cellpadding="2" cellspacing="5" width="100%" summary="Breaking API changes">
+  <tbody>
+    <tr>
+      <td align="left" width="72%"> <font size="+3"><b>jdt ui -
+Breaking API changes from R3.2 to R3.3</b></font> <br>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      None
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p> </p>
+<table border="1" cellpadding="2" cellspacing="5" width="100%" summary="Non-breaking API changes">
+  <tbody>
+    <tr>
+      <td align="left" width="72%"> <font size="+3"><b>jdt ui -
+Non-breaking API changes from R3.2 to R3.3</b></font> <br>
+      </td>
+    </tr>
+    <tr>
+      <td>New and deprecated API in <code>org.eclipse.jdt.ui.jarpackager.JarPackageData</code>:
+      <ul><li><code>createJarDescriptionWriter(OutputStream)</code> has been
+deprecated in favor of <code>createJarDescriptionWriter(OutputStream, String)</code> which allows to specify the encoding of the description file.</li></ul> </td>
+    </tr>
+    <tr>
+      <td>
+        New API in <code>org.eclipse.jdt.ui.refactoring.IRefactoringProcessorIds</code>:
+        <ul>
+          <li>COPY_PROCESSOR</li>
+          <li>addition to RENAME_PACKAGE_FRAGMENT_PROCESSOR:
+              <br>participants can now get an IJavaElementMapper and an IResourceMapper
+              from the processor to find the location of elements after the rename</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        New API <code>org.eclipse.jdt.ui.JavaUI.openInEditor(IJavaElement, activate, reveal)</code>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        New API in <code>org.eclipse.jdt.ui.ITypeHierarchyViewPart</code>:
+        <ul>
+			<li>showMembersInHierarchy(boolean)</li>
+			<li>isShowMembersInHierarchy()</li>
+			<li>showQualifiedTypeNames(boolean)</li>
+			<li>isQualifiedTypeNamesEnabled()</li>
+			<li>isLinkingEnabled()</li>
+			<li>setLinkingEnabled(boolean)</li>
+			<li>setViewLayout(int)</li>
+			<li>getViewLayout()</li>
+			<li>setHierarchyMode(int)</li>
+			<li>getHierarchyMode()</li>
+        </ul>
+        New constants in <code>org.eclipse.jdt.ui.ITypeHierarchyViewPart</code>:
+        <ul>
+        	<li>VIEW_LAYOUT_VERTICAL</li>
+        	<li>VIEW_LAYOUT_HORIZONTAL</li>
+        	<li>VIEW_LAYOUT_SINGLE</li>
+        	<li>VIEW_LAYOUT_AUTOMATIC</li>
+        	<li>HIERARCHY_MODE_CLASSIC</li>
+        	<li>HIERARCHY_MODE_SUPERTYPES</li>
+        	<li>HIERARCHY_MODE_SUBTYPES</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        New API in <code>org.eclipse.jdt.ui.actions.OpenViewActionGroup</code>:
+        <ul>
+			<li>containsOpenPropertiesAction(boolean)</li>
+        </ul>
+      </td>
+    </tr>      
+    <tr>
+      <td>
+        Added API to <code>org.eclipse.jdt.ui.StandardJavaElementContentProvider</code> to simplify the customization of the content provider:
+        <ul>
+			<li>getPackageFragmentRootContent(IPackageFragmentRoot)</li>
+			<li>getPackageContent(IPackageFragment)</li>
+			<li>getFolderContent(IFolder)</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        The following action has been deprecated <code>org.eclipse.jdt.ui.actions</code>:
+         <ul>
+			<li>FindStringsToExternalizeAction: replaced by ExternalizeStringsAction</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>        
+        The following constants have been deprecated in <code>org.eclipse.jdt.ui.actions.IJavaEditorActionDefinitionIds</code>:
+        <ul>
+        	<li>SHOW_JAVADOC: replaced by ITextEditorActionDefinitionIds#SHOW_INFORMATION</li>
+        	<li>FIND_STRINGS_TO_EXTERNALIZE: replaced by IJavaEditorActionDefinitionIds#EXTERNALIZE_STRINGS</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>        
+        The following constants have been deprecated in <code>org.eclipse.jdt.ui.actions.JdtActionConstants</code>:
+        <ul>
+        	<li>SHOW_JAVADOC: replaced by ITextEditorActionConstants#SHOW_INFORMATION</li>
+        	<li>FIND_STRINGS_TO_EXTERNALIZE: replaced by JdtActionConstants#EXTERNALIZE_STRINGS</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Added API to type wizard open actions: <code>OpenNewAnnotationWizardAction</code>, <code>OpenNewEnumWizardAction</code>, <code>OpenNewClassWizardAction</code>, <code>OpenNewInterfaceWizardAction (org.eclipse.jdt.ui.actions)</code> to control if an editor is opened after the type is created: 
+        <ul>
+			<li>setOpenEditorOnFinish(boolean openEditorOnFinish)</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Added API to <code>org.eclipse.jdt.ui.actions.OpenViewActionGroup</code>:
+        <ul>
+          <li>containsOpenPropertiesAction(boolean enable)</li>
+          <li>containsShowInMenu(boolean enable)</li>
+        </ul> 
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Added API to the NewContainerWizardPage: <code>org.eclipse.jdt.ui.wizards</code>: 
+        <ul>
+			<li>getJavaProject(): Return the Java project that the element will be created in or <code>null</code></li>
+        </ul>
+      </td>
+    </tr> 
+    <tr>
+      <td>
+        Deprecated <code>JavaElementSorter</code>. Use new API <code>JavaElementComparator</code> instead (<code>org.eclipse.jdt.ui.wizards</code>): 
+      </td>
+    </tr>
+    <tr>
+      <td>
+        The following constants have been added to <code>org.eclipse.jdt.ui.PreferenceConstants</code>: 
+        <ul>
+			<li>APPEARANCE_JAVADOC_FONT: the symbolic font name for the font used to display Javadoc</li>
+			<li>EDITOR_JAVA_BRACKET_BOLD: controls whether brackets are rendered in bold</li>
+			<li>EDITOR_JAVA_BRACKET_COLOR: the preference that holds the color used to render brackets</li>
+			<li>EDITOR_JAVA_BRACKET_ITALIC: controls whether brackets are rendered in italic</li>
+			<li>EDITOR_JAVA_BRACKET_STRIKETHROUGH: controls whether brackets are rendered in strikethrough</li>
+			<li>EDITOR_JAVA_BRACKET_UNDERLINE: controls whether brackets are rendered underlined</li>
+			<li>REFACTOR_LIGHTWEIGHT: controls whether certain refactorings use a lightweight UI when started from a Java editor</li>
+			<li>SPELLING_IGNORE_NON_LETTERS: controls whether non-letters at word boundaries should be ignored during spell checking</li>
+			<li>SPELLING_IGNORE_SINGLE_LETTERS: controls whether single letters should be ignored during spell checking</li>
+			<li>SPELLING_IGNORE_AMPERSAND_IN_PROPERTIES: controls whether ampersands should be ignored during spell checking</li>
+			<li>CODEASSIST_FAVORITE_STATIC_MEMBERS: the preference that holds the favorite static members</li>
+			<li>EDITOR_SOURCE_HOVER_BACKGROUND_COLOR: the preference that holds the source hover background color</li>
+			<li>EDITOR_SOURCE_HOVER_BACKGROUND_COLOR_SYSTEM_DEFAULT: the preference that tells whether to use the system default color for the source hover background color </li>
+        </ul>
+        The following constants have been deprecated in <code>org.eclipse.jdt.ui.PreferenceConstants</code>:
+        <ul>
+        	<li>LINK_PACKAGES_TO_EDITOR: Not used anymore</li>
+        	<li>LINK_TYPEHIERARCHY_TO_EDITOR: Not used anymore</li>
+        	<li>EDITOR_SHOW_TEXT_HOVER_AFFORDANCE: Replaced by AbstractDecoratedTextEditorPreferenceConstants#EDITOR_SHOW_TEXT_HOVER_AFFORDANCE</li>
+        	<li>EDITOR_SMART_HOME_END: Replaced by AbstractDecoratedTextEditorPreferenceConstants#EDITOR_SMART_HOME_END</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Added new extension point: <code>org.eclipse.jdt.ui.classpathAttributeConfiguration</code>: 
+        <ul>
+			<li>Extenders can define how custom class path attributes (<code>IClasspathAttribute</code>) are rendered and configured</li>
+			<li>New API <code>org.eclipse.jdt.ui.wizards.ClasspathAttributeConfiguration</code> to be extended by extension point clients.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Added API <code>ProjectActionGroup.getOpenProjectAction()</code> (org.eclipse.jdt.ui.actions)
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Added API to <code>org.eclipse.jdt.ui.JavaElementImageDescriptor</code>:
+         <ul>
+			<li>JavaElementImageDescriptor.VOLATILE</li>
+			<li>JavaElementImageDescriptor.TRANSIENT</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Added API to <code>org.eclipse.jdt.ui.refactoring.RenameSupport</code>:
+        <ul>
+          <li>static RenameSupport create(RenameJavaElementDescriptor descriptor) throws CoreException</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Added API to <code>org.eclipse.jdt.ui.wizards.JavaCapabilityConfigurationPage</code>:
+        <ul>
+          <li>protected void setFocus()</li>
+        </ul>
+      </td>
+    </tr>   
+  </tbody>
+</table>
+<p>
+API changes from 3.1 to 3.2 can be found <a href="../r3.2/apichanges_jdt-ui.html?view=co">here</a>.
+</p>
+</body>
+</html>
+

@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.eclipse.jdt.postfixcompletion</groupId>
+	<artifactId>org.eclipse.jdt.postfixcompletion.releng</artifactId>
+	<version>0.0.3-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Postfix code completion for Eclipse</name>
+	<properties>
+		<tycho-version>0.20.0</tycho-version>
+		<tycho.version>0.20.0</tycho.version>
+		<tycho-extras.version>0.20.0</tycho-extras.version>
+	</properties>
+	<repositories>
+		<!-- add Juno repository to resolve dependencies -->
+		<repository>
+			<id>Luna</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/releases/luna/</url>
+		</repository>
+		<repository>
+			<id>Luna updates</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/eclipse/updates/4.4/</url>
+		</repository>
+	</repositories>
+	<build>
+		<plugins>
+			<plugin>
+				<!-- enable tycho build extension -->
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+		</plugins>
+	</build>
+	<modules>
+		<module>../org.eclipse.jdt.postfixcompletion</module>
+		<module>../org.eclipse.jdt.postfixcompletion.feature</module>
+		<module>
+			../luna/org.eclipse.jdt.postfixcompletion.luna.patch
+		</module>
+		<module>../luna/org.eclipse.jdt.core</module>
+		<module>../luna/org.eclipse.jdt.ui</module>
+		
+		<module>../org.eclipse.jdt.postfixcompletion.updateSite</module>
+	</modules>
+</project>

@@ -1,0 +1,70 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="IBM">
+   <meta name="GENERATOR" content="Mozilla/4.51 [en] (WinNT; I) [Netscape]">
+   <title>Package-level Javadoc</title>
+</head>
+<body>
+Provides facilities for spell-checking of comments and strings in Java source code.
+<h2>
+Package Specification</h2>
+The content of this package extends the base functionality of the spell-checking engine.
+<p>
+It contains a spell-check engine specialized in Javadoc comments. 
+Several dictionaries with Java specific content like Javadoc keywords, HTML tags and Task tags 
+are provided. 
+Additionally, the engine contributes correction proposals to the QuickFix processor. 
+For non Java specific content the engine also contributes
+word completion proposals to the content assist processor.
+<h3>
+Spell-check engine</h3>
+<tt>SpellCheckEngine</tt> is the default implementation of the interface <tt>ISpellCheckEngine</tt>.
+It provides a facade for dealing with the setup of a spell-checker. This class provides methods
+to retrieve the available dictionaries and is responsible for the registration of those with the spell-checker.
+<tt>SpellCheckEngine</tt> also has support for life-cycle management. Single dictionaries can be temporarily
+unloaded from memory or unregistered.<br>
+To contribute own dictionaries use the methods to register locale sensitive or insensitive dictionaries. A dictionary can
+be associated to a specified locale, but can also be available for spell-checking arbitrary text in arbitrary languages.
+The actual spell-checker for a specified language can then be obtained by calling <tt>createSpellChecker(Locale)</tt>.
+This is the central point to working with the spell-checker. When requesting a spell-checker for a specified locale, the
+engine looks up the corresponding dictionary and registers it with the spell-checker. Note that the dictionaries
+are lazily loaded and can be further optimized by prefiltering the queried words.
+<p>
+<b>Note:</b> Locale sensitive dictionaries must be located in the "dictionaries/" subdirectory of the JDT UI plugin install 
+location. The dictionaries are newline-separated word lists having the filename "language_country.dictionary", where "language" and "country" are 
+the lowercase ISO-3166 language and country codes, respectively. The default dictionary is "en_us.dictionary". For correct 
+behavior of the spell-check engine, at least the default dictionary must be installed. The default dictionary corresponds to the default locale 
+of the spell-check engine.
+<h3>
+Dictionaries</h3>
+This implementation for a Javadoc comment spell-checker provides the following read-only
+dictionaries:
+<ul>
+<li>A dictionary for Javadoc tags: This dictionary contains the most commonly used Javadoc tags. When
+spell-checking Javadoc comments, this dictionary contributes correction proposals to the QuickFix processor to correct misspelt Javadoc tags.</li>
+<li>A dictionary for HTML tags: This dictionary contains the most commonly used HTML tags for writing Javadoc comments. When spell-checking
+Javadoc- or multiline comments, this dictionary contributes correction proposals to the QuickFix processor as well as
+word completion proposals to the Content Assist processor.</li>
+<li>A dictionary for Task tags: This dictionary reflects the currently available Java Task tags. When spell-checking arbitrary text in Java files, 
+this dictionary contributes proposals both to the QuickFix processor and the Content Assist processor.</li>
+</ul>
+<h3>
+QuickFix processor</h3>
+The comment spell-checker also contributes a quickfix processor as an extension. This implementation of a quickfix processor
+contributes the following correction proposals:
+<ul>
+<li>Proposals for correct spelling: A number of words considered most similar to the incorrectly spelt word.</li>
+<li>The proposal to correct the sentence capitalization: This proposal is offered on incorrectly spelt words at the beginning of a sentence.
+<li>The proposal to add the unrecognized word to the locale-insensitive dictionaries</li>
+<li>The proposal to ignore the word during the current editing session</li>
+</ul>
+<h3>
+Content Assist processor</h3>
+The last contribution of the spell-checker is the support for word completion. The spell-checker provides a custom 
+content assist processor to produce word completion proposals.<br>
+Word completion works on all non Java code content types and delivers a number of proposals based on the current
+caret position.
+</body>
+</html>

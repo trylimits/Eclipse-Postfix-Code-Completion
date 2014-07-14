@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.jdt.ui" version="2">
+    <resource path="core refactoring/org/eclipse/jdt/internal/corext/refactoring/code/ReplaceInvocationsRefactoring.java" type="org.eclipse.jdt.internal.corext.refactoring.code.ReplaceInvocationsRefactoring">
+        <filter id="571519004">
+            <message_arguments>
+                <message_argument value="org.eclipse.jdt.internal.corext.refactoring.code.ReplaceInvocationsRefactoring.createChange(IProgressMonitor)"/>
+                <message_argument value="JavaRefactoringDescriptor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="core refactoring/org/eclipse/jdt/internal/corext/refactoring/scripting/JavaUIRefactoringContribution.java" type="org.eclipse.jdt.internal.corext.refactoring.scripting.JavaUIRefactoringContribution">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="JavaRefactoringContribution"/>
+                <message_argument value="JavaUIRefactoringContribution"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="internal compatibility/org/eclipse/jdt/internal/corext/SourceRange.java" type="org.eclipse.jdt.internal.corext.SourceRange">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="ISourceRange"/>
+                <message_argument value="SourceRange"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="ui refactoring/org/eclipse/jdt/internal/ui/refactoring/PullPushCheckboxTableViewer.java" type="org.eclipse.jdt.internal.ui.refactoring.PullPushCheckboxTableViewer">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CheckboxTableViewer"/>
+                <message_argument value="PullPushCheckboxTableViewer"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="ui refactoring/org/eclipse/jdt/internal/ui/refactoring/nls/ExternalizeWizardPage.java" type="org.eclipse.jdt.internal.ui.refactoring.nls.ExternalizeWizardPage">
+        <filter id="571519004">
+            <message_arguments>
+                <message_argument value="org.eclipse.jdt.internal.ui.refactoring.nls.ExternalizeWizardPage.createTableViewer(Composite)"/>
+                <message_argument value="TableViewer"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="ui/org/eclipse/jdt/internal/ui/CompatibilityTemplateStore.java" type="org.eclipse.jdt.internal.ui.CompatibilityTemplateStore">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="ContributionTemplateStore"/>
+                <message_argument value="CompatibilityTemplateStore"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="ui/org/eclipse/jdt/internal/ui/callhierarchy/CallHierarchyViewer.java" type="org.eclipse.jdt.internal.ui.callhierarchy.CallHierarchyViewer">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="TreeViewer"/>
+                <message_argument value="CallHierarchyViewer"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="ui/org/eclipse/jdt/internal/ui/callhierarchy/LocationViewer.java" type="org.eclipse.jdt.internal.ui.callhierarchy.LocationViewer">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="TableViewer"/>
+                <message_argument value="LocationViewer"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="ui/org/eclipse/jdt/internal/ui/compare/JavaStructureDiffViewer.java" type="org.eclipse.jdt.internal.ui.compare.JavaStructureDiffViewer">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="StructureDiffViewer"/>
+                <message_argument value="JavaStructureDiffViewer"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="ui/org/eclipse/jdt/internal/ui/javaeditor/AddClassFileMarkerAction.java" type="org.eclipse.jdt.internal.ui.javaeditor.AddClassFileMarkerAction">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="AddMarkerAction"/>
+                <message_argument value="AddClassFileMarkerAction"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="ui/org/eclipse/jdt/internal/ui/javaeditor/ClassFileMarkerRulerAction.java" type="org.eclipse.jdt.internal.ui.javaeditor.ClassFileMarkerRulerAction">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="MarkerRulerAction"/>
+                <message_argument value="ClassFileMarkerRulerAction"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="ui/org/eclipse/jdt/internal/ui/javaeditor/CompilationUnitDocumentProvider.java" type="org.eclipse.jdt.internal.ui.javaeditor.CompilationUnitDocumentProvider$CompilationUnitAnnotationModel">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="ResourceMarkerAnnotationModel"/>
+                <message_argument value="CompilationUnitAnnotationModel"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="ui/org/eclipse/jdt/internal/ui/javaeditor/ExternalClassFileEditorInput.java" type="org.eclipse.jdt.internal.ui.javaeditor.ExternalClassFileEditorInput">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="FileEditorInput"/>
+                <message_argument value="ExternalClassFileEditorInput"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="ui/org/eclipse/jdt/internal/ui/javaeditor/JavaOutlinePage.java" type="org.eclipse.jdt.internal.ui.javaeditor.JavaOutlinePage$JavaOutlineViewer">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="TreeViewer"/>
+                <message_argument value="JavaOutlineViewer"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="ui/org/eclipse/jdt/internal/ui/javaeditor/JavaSourceViewer.java" type="org.eclipse.jdt.internal.ui.javaeditor.JavaSourceViewer">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="ProjectionViewer"/>
+                <message_argument value="JavaSourceViewer"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="ui/org/eclipse/jdt/internal/ui/text/JavaOutlineInformationControl.java" type="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControl$OutlineTreeViewer">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="TreeViewer"/>
+                <message_argument value="OutlineTreeViewer"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="ui/org/eclipse/jdt/internal/ui/util/ViewerPane.java" type="org.eclipse.jdt.internal.ui.util.ViewerPane">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="ViewForm"/>
+                <message_argument value="ViewerPane"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="ui/org/eclipse/jdt/internal/ui/viewsupport/ProblemTableViewer.java" type="org.eclipse.jdt.internal.ui.viewsupport.ProblemTableViewer">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="TableViewer"/>
+                <message_argument value="ProblemTableViewer"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="ui/org/eclipse/jdt/internal/ui/viewsupport/ProblemTreeViewer.java" type="org.eclipse.jdt.internal.ui.viewsupport.ProblemTreeViewer">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="TreeViewer"/>
+                <message_argument value="ProblemTreeViewer"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="ui/org/eclipse/jdt/ui/actions/IJavaEditorActionDefinitionIds.java" type="org.eclipse.jdt.ui.actions.IJavaEditorActionDefinitionIds">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="ITextEditorActionDefinitionIds"/>
+                <message_argument value="IJavaEditorActionDefinitionIds"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>
