@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+                    
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+                    
+  <meta name="Author" content="IBM">
+                    
+  <meta name="GENERATOR" content="Mozilla/4.75 [en] (Windows NT 5.0; U) [Netscape]">
+  <title>Package-level Javadoc</title>
+    
+</head>
+<body>
+  Application programming interfaces for Java search participants..     
+     
+  <h2> Package Specification</h2>
+      The package provides API that allows clients to participate in Java searches. A Java search query is specified by a
+<TT>QuerySpecification</TT>
+; an
+<TT>ElementQuerySpecification</TT>
+if searching for a specific
+<TT>IJavaElement</TT>
+, a
+<TT>PatternQuerySpecification</TT>
+when searching for a string pattern.
+<P>Clients who want to participate in Java search queries should implement <TT>IQueryParticipant</TT>. A query participant interprets a <TT>QuerySpecification</TT> and reports matches to a <TT>ISearchRequestor</TT>. If a query participant wishes to report matches against elements that are not <TT>IResources</TT> or <TT>IJavaElements</TT>, it has to implement a <TT>IMatchPresentation</TT> to render these elements.</P>
+</body>
+</html>

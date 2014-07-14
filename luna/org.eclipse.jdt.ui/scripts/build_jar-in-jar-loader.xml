@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="Jar in Jar Loader" default="build" basedir="..">
+	
+	<target name="build" description="Cleans, builds and refreshes the impacted resources" depends="clean, jar-in-jar-loader_zip" />
+	
+	<!-- Empty target for "After a Clean" task (we don't want to rebuild the Jar here, e.g. on checkout). -->
+	<target name="dummy_clean"/>
+	
+	<target name="init" depends="properties">
+		<property name="temp.folder" value="${basedir}/temp.folder" />
+		<property name="build.result.folder" value="${basedir}" />
+	</target>
+	
+	<target name="properties" if="eclipse.running">
+		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
+	</target>
+	
+	<target name="jar-in-jar-loader_zip" depends="init" description="Creates the jar-in-jar-loader.zip">
+		<property name="destdir" value="${temp.folder}/jar-in-jar-loader.zip.bin" />
+		<delete dir="${temp.folder}/jar-in-jar-loader.zip.bin" />
+		<mkdir dir="${temp.folder}/jar-in-jar-loader.zip.bin" />
+		<javac target="1.1" source="1.3" destdir="${temp.folder}/jar-in-jar-loader.zip.bin" failonerror="true" verbose="false" debug="on" includeAntRuntime="no" classpath="${basedir}/bin">
+			<src path="jar in jar loader/" />
+		</javac>
+		<mkdir dir="${build.result.folder}" />
+    	<zip destfile="${build.result.folder}/jar-in-jar-loader.zip" basedir="${temp.folder}/jar-in-jar-loader.zip.bin"/>
+		<delete dir="${temp.folder}" />
+	</target>
+	
+	<target name="clean" depends="init">
+		<delete file="${build.result.folder}/jar-in-jar-loader.zip" />
+		<delete dir="${temp.folder}" />
+	</target>
+</project>
