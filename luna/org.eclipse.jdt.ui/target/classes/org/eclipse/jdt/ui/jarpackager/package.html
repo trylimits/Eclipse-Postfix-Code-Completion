@@ -1,0 +1,25 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="IBM">
+   <meta name="GENERATOR" content="Mozilla/4.75 [en] (WinNT; U) [Netscape]">
+   <title>Package-level Javadoc</title>
+</head>
+<body>
+Provides classes and interfaces to generate a JAR file.
+This package provides the interfaces and classes for exporting a set of resources
+to a JAR file via runnable. It offers hooks to extend the <tt>JarPackageData</tt>
+to load and store the <tt>JarPackageData</tt> and to write the JAR itself.
+<h2>
+Package Specification</h2>
+The <tt>JarPackageData</tt> contains all necessary information to generate a
+JAR file. This class can be extended to provide additional data or to plug-in
+a custom <tt>JarWriter</tt>. The default runnable which creates the JAR can
+be replaced by implementing <tt>IJarExportRunnable</tt>. The same applies for the
+manifest provider (<tt>IManifestProvider</tt>) and the classes which save
+(<tt>IJarDescriptionWriter</tt>) and read (<tt>IJarDescriptionReader</tt>) the
+<tt>JarPackageData</tt>. 
+</body>
+</html>
+

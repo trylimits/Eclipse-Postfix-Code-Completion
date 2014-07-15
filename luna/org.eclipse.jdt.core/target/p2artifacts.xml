@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<artifacts size='4'>
+  <artifact classifier='osgi.bundle' id='org.eclipse.jdt.core' version='3.10.0.201407140735'>
+    <properties size='5'>
+      <property name='artifact.size' value='5426649'/>
+      <property name='download.size' value='5426649'/>
+      <property name='maven-groupId' value='org.eclipse.jdt'/>
+      <property name='maven-artifactId' value='org.eclipse.jdt.core'/>
+      <property name='maven-version' value='3.10.0-SNAPSHOT'/>
+    </properties>
+  </artifact>
+  <artifact classifier='osgi.bundle' id='org.eclipse.jdt.core.ant.compiler.adapter' version='3.10.0.201407140735'>
+    <properties size='6'>
+      <property name='artifact.size' value='12557'/>
+      <property name='download.size' value='12557'/>
+      <property name='maven-groupId' value='org.eclipse.jdt'/>
+      <property name='maven-artifactId' value='org.eclipse.jdt.core'/>
+      <property name='maven-version' value='3.10.0-SNAPSHOT'/>
+      <property name='maven-classifier' value='antadapter'/>
+    </properties>
+  </artifact>
+  <artifact classifier='osgi.bundle' id='org.eclipse.jdt.core.compiler.batch.source' version='3.10.0.201407140735'>
+    <properties size='6'>
+      <property name='artifact.size' value='1756775'/>
+      <property name='download.size' value='1756775'/>
+      <property name='maven-groupId' value='org.eclipse.jdt'/>
+      <property name='maven-artifactId' value='org.eclipse.jdt.core'/>
+      <property name='maven-version' value='3.10.0-SNAPSHOT'/>
+      <property name='maven-classifier' value='batch-compiler-src'/>
+    </properties>
+  </artifact>
+  <artifact classifier='osgi.bundle' id='org.eclipse.jdt.core.compiler.batch' version='3.10.0.201407140735'>
+    <properties size='6'>
+      <property name='artifact.size' value='2083350'/>
+      <property name='download.size' value='2083350'/>
+      <property name='maven-groupId' value='org.eclipse.jdt'/>
+      <property name='maven-artifactId' value='org.eclipse.jdt.core'/>
+      <property name='maven-version' value='3.10.0-SNAPSHOT'/>
+      <property name='maven-classifier' value='batch-compiler'/>
+    </properties>
+  </artifact>
+</artifacts>

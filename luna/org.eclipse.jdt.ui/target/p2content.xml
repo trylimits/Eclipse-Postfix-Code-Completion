@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='1'>
+  <unit id='org.eclipse.jdt.ui' version='3.10.0.201407140735'>
+    <update id='org.eclipse.jdt.ui' range='[0.0.0,3.10.0.201407140735)' severity='0'/>
+    <properties size='8'>
+      <property name='df_LT.pluginName' value='Java Development Tools UI'/>
+      <property name='df_LT.providerName' value='Eclipse.org'/>
+      <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
+      <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+      <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
+      <property name='maven-groupId' value='org.eclipse.jdt'/>
+      <property name='maven-artifactId' value='org.eclipse.jdt.ui'/>
+      <property name='maven-version' value='3.10.0-SNAPSHOT'/>
+    </properties>
+    <provides size='107'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jdt.ui' version='3.10.0.201407140735'/>
+      <provided namespace='osgi.bundle' name='org.eclipse.jdt.ui' version='3.10.0.201407140735'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.buildpath' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.callhierarchy' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.codemanipulation' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.codemanipulation.tostringgeneration' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.dom' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.dom.fragments' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.fix' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.javadoc' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.base' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.binary' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.changes' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.code' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.code.flow' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.delegates' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.generics' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.nls' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.nls.changes' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.participants' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.rename' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.reorg' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.scripting' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.sef' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.structure' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.structure.constraints' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.surround' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.tagging' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.typeconstraints' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.typeconstraints.types' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.typeconstraints.typesets' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.typeconstraints2' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.refactoring.util' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.template.java' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.util' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.actions' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.browsing' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.callhierarchy' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.commands' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.compare' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.dialogs' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.dnd' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.filters' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.fix' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.infoviews' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.jarimport' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.jarpackager' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.jarpackagerfat' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.javadocexport' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.javaeditor' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.javaeditor.breadcrumb' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.javaeditor.saveparticipant' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.javaeditor.selectionactions' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.model' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.navigator' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.packageview' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.preferences' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.preferences.cleanup' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.preferences.formatter' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.propertiesfileeditor' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.refactoring' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.refactoring.actions' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.refactoring.binary' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.refactoring.code' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.refactoring.contentassist' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.refactoring.nls' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.refactoring.nls.search' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.refactoring.reorg' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.refactoring.sef' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.search' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.text' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.text.correction' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.text.correction.proposals' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.text.folding' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.text.java' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.text.java.hover' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.text.javadoc' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.text.spelling' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.text.spelling.engine' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.text.template.contentassist' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.text.template.preferences' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.typehierarchy' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.util' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.viewsupport' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.wizards' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.wizards.buildpaths' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.wizards.buildpaths.newsourcepage' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.wizards.dialogfields' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.internal.ui.workingsets' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.ui' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.ui.actions' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.ui.cleanup' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.ui.dialogs' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.ui.jarpackager' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.ui.refactoring' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.ui.search' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.ui.text' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.ui.text.folding' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.ui.text.java' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.ui.text.java.correction' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.ui.text.java.hover' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.jdt.ui.wizards' version='0.0.0'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+    </provides>
+    <requires size='30'>
+      <required namespace='osgi.bundle' name='org.eclipse.help' range='[3.4.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.core.expressions' range='[3.4.100,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.core.filesystem' range='[1.2.0,2.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.core.resources' range='[3.5.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.core.variables' range='[3.2.200,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.jdt.core' range='[3.10.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.search' range='[3.7.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.debug.core' range='[3.5.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.debug.ui' range='[3.5.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.jdt.launching' range='[3.6.100,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.compare' range='[3.5.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.team.ui' range='[3.4.100,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.team.core' range='[3.4.100,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.jface' range='[3.9.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.jface.text' range='[3.8.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.ui' range='[3.5.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.ui.console' range='[3.4.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.ui.workbench.texteditor' range='[3.8.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.ui.ide' range='[3.5.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.ui.views' range='[3.3.100,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.ui.editors' range='[3.5.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.core.runtime' range='[3.7.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.ltk.core.refactoring' range='[3.5.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.ltk.ui.refactoring' range='[3.5.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.ui.forms' range='[3.4.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.ui.navigator' range='[3.3.200,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.ui.navigator.resources' range='[3.4.0,4.0.0)'/>
+      <required namespace='osgi.bundle' name='org.eclipse.jdt.core.manipulation' range='[1.4.0,2.0.0)'/>
+      <required namespace='osgi.bundle' name='com.ibm.icu' range='4.4.2'/>
+      <required namespace='osgi.bundle' name='org.eclipse.equinox.bidi' range='[0.10.0,2.0.0)'/>
+    </requires>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='org.eclipse.jdt.ui' version='3.10.0.201407140735'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-SymbolicName: org.eclipse.jdt.ui; singleton:=true&#xA;Bundle-Version: 3.10.0.201407140735&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+</units>
