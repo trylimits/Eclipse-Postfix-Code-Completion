@@ -1,14 +1,14 @@
 Manifest-Version: 1.0
-Bundle-SymbolicName: org.eclipse.jdt.core.ant.compiler.adapter;singlet
- on:=true
-Bundle-Name: %pluginName
-Bundle-Version: 3.10.0.201407140735
-Bundle-ClassPath: bogus
-Bundle-Localization: plugin
-Bundle-ManifestVersion: 2
-Bundle-RequiredExecutionEnvironment: J2SE-1.4
 Bundle-Vendor: %providerName
+Bundle-ClassPath: bogus
+Bundle-Version: 3.10.0.201411112213
+Bundle-Localization: plugin
+Bundle-Name: %pluginName
+Bundle-ManifestVersion: 2
 Import-Package: org.eclipse.jdt.core.compiler,org.eclipse.jdt.internal
  .antadapter,org.eclipse.jdt.internal.compiler.batch,org.eclipse.jdt.i
  nternal.compiler.impl,org.eclipse.jdt.internal.compiler.util
+Bundle-SymbolicName: org.eclipse.jdt.core.ant.compiler.adapter;singlet
+ on:=true
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
 

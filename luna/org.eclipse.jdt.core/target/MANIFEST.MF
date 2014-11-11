@@ -1,16 +1,4 @@
 Manifest-Version: 1.0
-Bundle-SymbolicName: org.eclipse.jdt.core; singleton:=true
-Require-Bundle: org.eclipse.core.resources;bundle-version="[3.3.0,4.0.
- 0)",org.eclipse.core.runtime;bundle-version="[3.3.0,4.0.0)",org.eclip
- se.core.filesystem;bundle-version="[1.0.0,2.0.0)",org.eclipse.text;bu
- ndle-version="[3.1.0,4.0.0)",org.eclipse.team.core;bundle-version="[3
- .1.0,4.0.0)";resolution:=optional
-Bundle-ManifestVersion: 2
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-ActivationPolicy: lazy
-Bundle-Vendor: %providerName
-Main-Class: org.eclipse.jdt.internal.compiler.batch.Main
-Eclipse-ExtensibleAPI: true
 Export-Package: org.eclipse.jdt.core,org.eclipse.jdt.core.compiler,org
  .eclipse.jdt.core.compiler.batch,org.eclipse.jdt.core.dom,org.eclipse
  .jdt.core.dom.rewrite,org.eclipse.jdt.core.eval,org.eclipse.jdt.core.
@@ -60,8 +48,20 @@ Export-Package: org.eclipse.jdt.core,org.eclipse.jdt.core.compiler,org
  lipse.jdt.internal.formatter.align;x-internal:=true,org.eclipse.jdt.i
  nternal.formatter.comment;x-internal:=true,org.eclipse.jdt.internal.f
  ormatter.old;x-internal:=true
+Bundle-ActivationPolicy: lazy
 Bundle-Name: %pluginName
-Bundle-Version: 3.10.0.201407140735
 Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.core.resources;bundle-version="[3.3.0,4.0.
+ 0)",org.eclipse.core.runtime;bundle-version="[3.3.0,4.0.0)",org.eclip
+ se.core.filesystem;bundle-version="[1.0.0,2.0.0)",org.eclipse.text;bu
+ ndle-version="[3.1.0,4.0.0)",org.eclipse.team.core;bundle-version="[3
+ .1.0,4.0.0)";resolution:=optional
+Bundle-Vendor: %providerName
+Bundle-Version: 3.10.0.201411112213
+Bundle-ManifestVersion: 2
 Bundle-Activator: org.eclipse.jdt.core.JavaCore
+Bundle-SymbolicName: org.eclipse.jdt.core; singleton:=true
+Main-Class: org.eclipse.jdt.internal.compiler.batch.Main
+Eclipse-ExtensibleAPI: true
 

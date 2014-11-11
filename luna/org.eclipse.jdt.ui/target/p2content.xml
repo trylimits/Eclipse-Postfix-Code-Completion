@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <units size='1'>
-  <unit id='org.eclipse.jdt.ui' version='3.10.0.201407140735'>
-    <update id='org.eclipse.jdt.ui' range='[0.0.0,3.10.0.201407140735)' severity='0'/>
+  <unit id='org.eclipse.jdt.ui' version='3.10.0.201411112213'>
+    <update id='org.eclipse.jdt.ui' range='[0.0.0,3.10.0.201411112213)' severity='0'/>
     <properties size='8'>
-      <property name='df_LT.pluginName' value='Java Development Tools UI'/>
       <property name='df_LT.providerName' value='Eclipse.org'/>
+      <property name='df_LT.pluginName' value='Java Development Tools UI'/>
       <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
       <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
       <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
@@ -13,8 +13,8 @@
       <property name='maven-version' value='3.10.0-SNAPSHOT'/>
     </properties>
     <provides size='107'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jdt.ui' version='3.10.0.201407140735'/>
-      <provided namespace='osgi.bundle' name='org.eclipse.jdt.ui' version='3.10.0.201407140735'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jdt.ui' version='3.10.0.201411112213'/>
+      <provided namespace='osgi.bundle' name='org.eclipse.jdt.ui' version='3.10.0.201411112213'/>
       <provided namespace='java.package' name='org.eclipse.jdt.internal.corext' version='0.0.0'/>
       <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.buildpath' version='0.0.0'/>
       <provided namespace='java.package' name='org.eclipse.jdt.internal.corext.callhierarchy' version='0.0.0'/>
@@ -154,13 +154,13 @@
       <required namespace='osgi.bundle' name='org.eclipse.equinox.bidi' range='[0.10.0,2.0.0)'/>
     </requires>
     <artifacts size='1'>
-      <artifact classifier='osgi.bundle' id='org.eclipse.jdt.ui' version='3.10.0.201407140735'/>
+      <artifact classifier='osgi.bundle' id='org.eclipse.jdt.ui' version='3.10.0.201411112213'/>
     </artifacts>
     <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
     <touchpointData size='1'>
       <instructions size='1'>
         <instruction key='manifest'>
-          Bundle-SymbolicName: org.eclipse.jdt.ui; singleton:=true&#xA;Bundle-Version: 3.10.0.201407140735&#xA;
+          Bundle-SymbolicName: org.eclipse.jdt.ui; singleton:=true&#xA;Bundle-Version: 3.10.0.201411112213&#xA;
         </instruction>
       </instructions>
     </touchpointData>

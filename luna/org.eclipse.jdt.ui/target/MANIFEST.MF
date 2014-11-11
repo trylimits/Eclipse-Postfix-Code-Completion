@@ -1,5 +1,29 @@
 Manifest-Version: 1.0
-Bundle-SymbolicName: org.eclipse.jdt.ui; singleton:=true
+Require-Bundle: org.eclipse.help;bundle-version="[3.4.0,4.0.0)",org.ec
+ lipse.core.expressions;bundle-version="[3.4.100,4.0.0)",org.eclipse.c
+ ore.filesystem;bundle-version="[1.2.0,2.0.0)",org.eclipse.core.resour
+ ces;bundle-version="[3.5.0,4.0.0)",org.eclipse.core.variables;bundle-
+ version="[3.2.200,4.0.0)",org.eclipse.jdt.core;bundle-version="[3.10.
+ 0,4.0.0)",org.eclipse.search;bundle-version="[3.7.0,4.0.0)",org.eclip
+ se.debug.core;bundle-version="[3.5.0,4.0.0)",org.eclipse.debug.ui;bun
+ dle-version="[3.5.0,4.0.0)",org.eclipse.jdt.launching;bundle-version=
+ "[3.6.100,4.0.0)",org.eclipse.compare;bundle-version="[3.5.0,4.0.0)",
+ org.eclipse.team.ui;bundle-version="[3.4.100,4.0.0)",org.eclipse.team
+ .core;bundle-version="[3.4.100,4.0.0)",org.eclipse.jface;bundle-versi
+ on="[3.9.0,4.0.0)",org.eclipse.jface.text;bundle-version="[3.8.0,4.0.
+ 0)",org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",org.eclipse.ui.cons
+ ole;bundle-version="[3.4.0,4.0.0)",org.eclipse.ui.workbench.textedito
+ r;bundle-version="[3.8.0,4.0.0)",org.eclipse.ui.ide;bundle-version="[
+ 3.5.0,4.0.0)",org.eclipse.ui.views;bundle-version="[3.3.100,4.0.0)",o
+ rg.eclipse.ui.editors;bundle-version="[3.5.0,4.0.0)",org.eclipse.core
+ .runtime;bundle-version="[3.7.0,4.0.0)",org.eclipse.ltk.core.refactor
+ ing;bundle-version="[3.5.0,4.0.0)",org.eclipse.ltk.ui.refactoring;bun
+ dle-version="[3.5.0,4.0.0)",org.eclipse.ui.forms;bundle-version="[3.4
+ .0,4.0.0)",org.eclipse.ui.navigator;bundle-version="[3.3.200,4.0.0)",
+ org.eclipse.ui.navigator.resources;bundle-version="[3.4.0,4.0.0)",org
+ .eclipse.jdt.core.manipulation;bundle-version="[1.4.0,2.0.0)",com.ibm
+ .icu;bundle-version="4.4.2",org.eclipse.equinox.bidi;bundle-version="
+ [0.10.0,2.0.0)"
 Export-Package: org.eclipse.jdt.internal.corext;x-friends:="org.eclips
  e.jdt.junit",org.eclipse.jdt.internal.corext.buildpath;x-internal:=tr
  ue,org.eclipse.jdt.internal.corext.callhierarchy;x-internal:=true,org
@@ -96,37 +120,13 @@ Export-Package: org.eclipse.jdt.internal.corext;x-friends:="org.eclips
  .folding,org.eclipse.jdt.ui.text.java,org.eclipse.jdt.ui.text.java.co
  rrection,org.eclipse.jdt.ui.text.java.hover,org.eclipse.jdt.ui.wizard
  s
-Bundle-Name: %pluginName
-Bundle-Version: 3.10.0.201407140735
-Bundle-Localization: plugin
-Require-Bundle: org.eclipse.help;bundle-version="[3.4.0,4.0.0)",org.ec
- lipse.core.expressions;bundle-version="[3.4.100,4.0.0)",org.eclipse.c
- ore.filesystem;bundle-version="[1.2.0,2.0.0)",org.eclipse.core.resour
- ces;bundle-version="[3.5.0,4.0.0)",org.eclipse.core.variables;bundle-
- version="[3.2.200,4.0.0)",org.eclipse.jdt.core;bundle-version="[3.10.
- 0,4.0.0)",org.eclipse.search;bundle-version="[3.7.0,4.0.0)",org.eclip
- se.debug.core;bundle-version="[3.5.0,4.0.0)",org.eclipse.debug.ui;bun
- dle-version="[3.5.0,4.0.0)",org.eclipse.jdt.launching;bundle-version=
- "[3.6.100,4.0.0)",org.eclipse.compare;bundle-version="[3.5.0,4.0.0)",
- org.eclipse.team.ui;bundle-version="[3.4.100,4.0.0)",org.eclipse.team
- .core;bundle-version="[3.4.100,4.0.0)",org.eclipse.jface;bundle-versi
- on="[3.9.0,4.0.0)",org.eclipse.jface.text;bundle-version="[3.8.0,4.0.
- 0)",org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",org.eclipse.ui.cons
- ole;bundle-version="[3.4.0,4.0.0)",org.eclipse.ui.workbench.textedito
- r;bundle-version="[3.8.0,4.0.0)",org.eclipse.ui.ide;bundle-version="[
- 3.5.0,4.0.0)",org.eclipse.ui.views;bundle-version="[3.3.100,4.0.0)",o
- rg.eclipse.ui.editors;bundle-version="[3.5.0,4.0.0)",org.eclipse.core
- .runtime;bundle-version="[3.7.0,4.0.0)",org.eclipse.ltk.core.refactor
- ing;bundle-version="[3.5.0,4.0.0)",org.eclipse.ltk.ui.refactoring;bun
- dle-version="[3.5.0,4.0.0)",org.eclipse.ui.forms;bundle-version="[3.4
- .0,4.0.0)",org.eclipse.ui.navigator;bundle-version="[3.3.200,4.0.0)",
- org.eclipse.ui.navigator.resources;bundle-version="[3.4.0,4.0.0)",org
- .eclipse.jdt.core.manipulation;bundle-version="[1.4.0,2.0.0)",com.ibm
- .icu;bundle-version="4.4.2",org.eclipse.equinox.bidi;bundle-version="
- [0.10.0,2.0.0)"
-Bundle-ManifestVersion: 2
-Bundle-Activator: org.eclipse.jdt.internal.ui.JavaPlugin
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: %providerName
+Bundle-ActivationPolicy: lazy
+Bundle-Version: 3.10.0.201411112213
+Bundle-Localization: plugin
+Bundle-Name: %pluginName
+Bundle-Activator: org.eclipse.jdt.internal.ui.JavaPlugin
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.eclipse.jdt.ui; singleton:=true
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
 

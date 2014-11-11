@@ -1,5 +1,4 @@
 Manifest-Version: 1.0
-Bundle-SymbolicName: org.eclipse.jdt.core.compiler.batch
 Export-Package: org.eclipse.jdt.core,org.eclipse.jdt.core.compiler,org
  .eclipse.jdt.internal.antadapter;x-internal:=true,org.eclipse.jdt.int
  ernal.compiler;x-internal:=true,org.eclipse.jdt.internal.compiler.apt
@@ -17,10 +16,11 @@ Export-Package: org.eclipse.jdt.core,org.eclipse.jdt.core.compiler,org
  ler.problem;x-internal:=true,org.eclipse.jdt.internal.compiler.util;x
  -internal:=true,org.eclipse.jdt.internal.compiler.tool;x-internal:=tr
  ue
-Bundle-Name: Eclipse Compiler for Java(TM)
-Bundle-Version: 3.10.0.201407140735
-Bundle-ClassPath: .
-Bundle-ManifestVersion: 2
 Bundle-Vendor: Eclipse.org
+Bundle-ClassPath: .
+Bundle-Version: 3.10.0.201411112213
+Bundle-Name: Eclipse Compiler for Java(TM)
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.eclipse.jdt.core.compiler.batch
 Main-Class: org.eclipse.jdt.internal.compiler.batch.Main
 
