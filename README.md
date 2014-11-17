@@ -10,26 +10,26 @@ p2 sites of your Luna Eclipse installation and install both features in the cate
 
 The plug-in installs the following Postfix Code Completion templates by default:
 
-- .beg
-- .cast
-- .constpriv
-- .constpub
-- .dowhile
-- .else
-- .field
-- .for
-- .fori
-- .forr
-- .nnull
-- .null
-- .sif
-- .snnull
-- .snull
-- .sysout
-- .throw
-- .var
-- .while
-- .withinregion
+Template | Description | Type Dependency
+--- | --- | ---
+`.beg` | Jumps to the beginning of the current expression | -
+`.cast` | Creates a type cast | -
+`.constpriv` | Extracts the current expression to a new private constant | -
+`.constpub` | Extracts the current expression to a new public constant | -
+`dowhile` | Uses the current expression as condition for a new do-while-loop | `boolean`
+`else` | Uses the current expression as a negated condition for a new if-statement | `boolean`
+`field` | Creates a field out of the expression | -
+`for` | Creates a for-loop out of the expression | `java.lang.Iterable`/arrays
+`fori` | Creates an indexed for-loop with out of the expression, counting upwards | arrays
+`forr` | Creates an indexed for-loop with out of the expression, counting downwards | arrays
+`nnull` | Creates an if-statement, checking the expression for not null | `java.lang.Object`
+`null` | Creates an if-statement, checking the expression for null | `java.lang.Object`
+`sysout` | Wraps the current expression into a `System.out.println()` call | `java.lang.String`
+`throw` | Creates a throw-statement out of the expression | `java.lang.Throwable`
+`var` | Assigns the expression to a new local variable | -
+`while` | Uses the current expression as condition for a new while-loop | `boolean`
+`withinregion` | Creates an if-statement out of an numeric expression an checks if the number is within an interval | `int`, `float`, ...
+
 
 Demonstration
 -------------
