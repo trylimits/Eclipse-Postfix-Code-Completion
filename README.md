@@ -1,12 +1,15 @@
 Eclipse Postfix Code Completion Plugin
 ======================================
 
-Extension to the Eclipse template system to support postfix code completion
+This is an extension to the JDT template system of *Eclipse* to support postfix code completion
 
-Please see https://bugs.eclipse.org/bugs/show_bug.cgi?id=433500
+In order to try use this feature, add
 
-In order to try out the feature, add https://raw.githubusercontent.com/trylimits/Eclipse-Postfix-Code-Completion/master/org.eclipse.jdt.postfixcompletion.updateSite/target/site/ to the
-p2 sites of your Luna Eclipse installation and install both features in the category /Postfix code completion/.
+    https://raw.githubusercontent.com/trylimits/Eclipse-Postfix-Code-Completion/master/org.eclipse.jdt.postfixcompletion.updateSite/target/site/
+    
+to the p2 sites of your Luna Eclipse installation and install both features in the category *Postfix code completion*.
+
+Please also see the corresponding bug ticket at https://bugs.eclipse.org/bugs/show_bug.cgi?id=433500
 
 The plug-in installs the following Postfix Code Completion templates by default:
 
