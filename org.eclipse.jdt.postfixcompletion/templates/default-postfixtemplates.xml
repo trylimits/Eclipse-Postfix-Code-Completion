@@ -13,7 +13,7 @@
 	${cursor}&#13;
 }</template>
 	
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.for" context="postfix" deleted="false" description="Creates a for statement" enabled="true" name="for">for (${type:newActualType(i)} ${n:newName(i)} : ${i:inner_expression(java.lang.Collection,array)}) {&#13;
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.for" context="postfix" deleted="false" description="Creates a for statement" enabled="true" name="for">for (${type:newActualType(i)} ${n:newName(i)} : ${i:inner_expression(java.util.Collection,array)}) {&#13;
 	${cursor}&#13;
 }</template>
 
