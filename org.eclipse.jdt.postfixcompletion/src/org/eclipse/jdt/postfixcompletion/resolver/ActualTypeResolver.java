@@ -35,6 +35,7 @@ public class ActualTypeResolver extends TypeResolver {
 				
 				param = refVar.getParamType();
 				if (param != null && "".equals(param) == false) {
+					param = param.replace("? extends ", "");
 					if (param.endsWith("[]")) { // In case of List<Integer[]> we must not remove []
 						// Variable is an array, i.e. String[] or List<String>[]
 						// Actual type is supposed to be:
