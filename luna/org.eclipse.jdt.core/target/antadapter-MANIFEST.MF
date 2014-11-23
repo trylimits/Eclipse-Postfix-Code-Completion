@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-Vendor: %providerName
 Bundle-ClassPath: bogus
-Bundle-Version: 3.10.0.201411231454
+Bundle-Version: 3.10.0.201411231516
 Bundle-Localization: plugin
 Bundle-Name: %pluginName
 Bundle-ManifestVersion: 2
