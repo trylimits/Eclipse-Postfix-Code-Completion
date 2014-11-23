@@ -6,6 +6,7 @@ import org.eclipse.jdt.internal.corext.template.java.JavaContext;
 import org.eclipse.jdt.internal.corext.template.java.JavaVariable;
 import org.eclipse.jdt.internal.corext.template.java.TypeResolver;
 import org.eclipse.jdt.internal.ui.text.template.contentassist.MultiVariable;
+import org.eclipse.jdt.postfixcompletion.core.JavaStatementPostfixContext;
 import org.eclipse.jface.text.templates.TemplateContext;
 import org.eclipse.jface.text.templates.TemplateVariable;
 
@@ -23,7 +24,7 @@ public class ActualTypeResolver extends TypeResolver {
 		List<String> params= variable.getVariableType().getParams();
 		if (params.size() > 0 && context instanceof JavaContext) {
 			String param = params.get(0);
-			JavaContext jc = (JavaContext) context;
+			JavaStatementPostfixContext jc = (JavaStatementPostfixContext) context;
 			TemplateVariable ref = jc.getTemplateVariable(param);
 			MultiVariable mv = (MultiVariable) variable;
 			
@@ -49,19 +50,14 @@ public class ActualTypeResolver extends TypeResolver {
 						// Map<Integer,String>>				=> Integer
 						// Something<Integer,Float,String>	=> Integer
 						param = param.substring(param.indexOf("<") + 1, param.lastIndexOf(">"));
-						if (param.contains(",")) {
+						if (!param.contains("<") && param.contains(",")) {
 							param = param.substring(0, param.indexOf(","));
 						}
 					} else {
 						// The given parameter is already an actual type 
 					}
 					
-					// TODO Check if addImport(..) works correctly in cases of param == java.util.List<java.lang.String>?! No, it does not :(
-					// Will not work in the following scenarios:
-					// actual type is something like java.util.List<java.lang.String> will lead to an output of List<java.lang.String>
-					// We will have to analyze the param string for all types and call addImport(..) for each single type
-					// and then replace all the occurrences in the param string
-					String reference = jc.addImport(param); 
+					String reference = jc.addImportGenericClass(param); 
 					mv.setValue(reference);
 					mv.setUnambiguous(true);
 		

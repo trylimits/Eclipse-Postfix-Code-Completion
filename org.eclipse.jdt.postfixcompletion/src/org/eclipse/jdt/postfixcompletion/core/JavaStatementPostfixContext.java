@@ -3,6 +3,7 @@ package org.eclipse.jdt.postfixcompletion.core;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -115,6 +116,44 @@ public class JavaStatementPostfixContext extends JavaContext {
 		this.selectedNode = currentNode;
 		
 		outOfRangeOffsets = new HashMap<>();
+	}
+	
+	public String addImportGenericClass(String className) {
+		Pattern p = Pattern.compile("[a-zA-Z0-9\\.]+");
+		Matcher m = p.matcher(className);
+		List<String> classNames = new ArrayList<String>();
+		Map<String, String> classNameMapping = new HashMap<String, String>();
+		while (m.find()) {
+			classNames.add(className.substring(m.start(), m.end()));
+		}
+		/*
+		 * In case the import class looks like this:
+		 * a.b.c.Foo<b.c.Foo>
+		 * we have to consider that - if we do not care about ordering, the following could happen:
+		 * 1. trying to import b.c.Foo - import is resolved to Foo
+		 * 2. replacing b.c.Foo with Foo - a.Foo<Foo> --> not correct (should be a.b.c.Foo<Foo>)
+		 * 3. ...
+		 * 
+		 * The solution to this is as follows:
+		 * 1. sorting the fully qualified class names by length
+		 * 2. replacing all occurring class names with unique identifiers ($$id$$)
+		 * 3. importing all class names and map the fully qualified identifier with the resolved identifier of the class
+		 * 4. replace the unique identifiers with the mapped values
+		 */
+		Collections.sort(classNames, new Comparator<String>() {
+			@Override
+			public int compare(String arg0, String arg1) {
+				return arg1.length() - arg0.length();
+			}
+		});
+		for (int i = 0; i < classNames.size(); i++) {
+			className = className.replace(classNames.get(i), "$$" + i + "$$");
+			classNameMapping.put(classNames.get(i), addImport(classNames.get(i)));
+		}
+		for (int i = 0; i < classNames.size(); i++) {
+			className = className.replace("$$" + i + "$$", classNameMapping.get(classNames.get(i)));
+		}
+		return className;
 	}
 	
 	private Region calculateNodeRegion(ASTNode node) {

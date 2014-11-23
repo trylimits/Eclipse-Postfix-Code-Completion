@@ -6,6 +6,7 @@ import org.eclipse.jdt.internal.corext.template.java.JavaContext;
 import org.eclipse.jdt.internal.corext.template.java.JavaVariable;
 import org.eclipse.jdt.internal.corext.template.java.TypeResolver;
 import org.eclipse.jdt.internal.ui.text.template.contentassist.MultiVariable;
+import org.eclipse.jdt.postfixcompletion.core.JavaStatementPostfixContext;
 import org.eclipse.jface.text.templates.TemplateContext;
 import org.eclipse.jface.text.templates.TemplateVariable;
 
@@ -21,7 +22,7 @@ public class VariableTypeResolver extends TypeResolver {
 		List<String> params= variable.getVariableType().getParams();
 		if (params.size() != 0 && context instanceof JavaContext) {
 			String param = params.get(0);
-			JavaContext jc = (JavaContext) context;
+			JavaStatementPostfixContext jc = (JavaStatementPostfixContext) context;
 			TemplateVariable ref = jc.getTemplateVariable(param);
 			MultiVariable mv= (MultiVariable) variable;
 			
@@ -33,7 +34,7 @@ public class VariableTypeResolver extends TypeResolver {
 				param = refVar.getParamType();
 				if (param != null && "".equals(param) == false) {
 					
-					String reference= jc.addImport(param);
+					String reference= jc.addImportGenericClass(param);
 					mv.setValue(reference);
 					mv.setUnambiguous(true);
 		
