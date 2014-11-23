@@ -18,7 +18,7 @@ Export-Package: org.eclipse.jdt.core,org.eclipse.jdt.core.compiler,org
  ue
 Bundle-Vendor: Eclipse.org
 Bundle-ClassPath: .
-Bundle-Version: 3.10.0.201411112213
+Bundle-Version: 3.10.0.201411231431
 Bundle-Name: Eclipse Compiler for Java(TM)
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.jdt.core.compiler.batch

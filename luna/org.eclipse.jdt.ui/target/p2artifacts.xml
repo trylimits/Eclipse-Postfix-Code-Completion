@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?artifactRepository version='1.1.0'?>
 <artifacts size='1'>
-  <artifact classifier='osgi.bundle' id='org.eclipse.jdt.ui' version='3.10.0.201411112213'>
+  <artifact classifier='osgi.bundle' id='org.eclipse.jdt.ui' version='3.10.0.201411231431'>
     <properties size='5'>
-      <property name='artifact.size' value='10224184'/>
-      <property name='download.size' value='10224184'/>
+      <property name='artifact.size' value='10224185'/>
+      <property name='download.size' value='10224185'/>
       <property name='maven-groupId' value='org.eclipse.jdt'/>
       <property name='maven-artifactId' value='org.eclipse.jdt.ui'/>
       <property name='maven-version' value='3.10.0-SNAPSHOT'/>
