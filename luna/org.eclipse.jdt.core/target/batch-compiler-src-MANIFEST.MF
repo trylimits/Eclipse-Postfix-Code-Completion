@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-Vendor: Eclipse.org
 Eclipse-SourceBundle: org.eclipse.jdt.core.compiler.batch;version="3.1
- 0.0.201411231516";roots:="."
-Bundle-Version: 3.10.0.201411231516
+ 0.0.201412091906";roots:="."
+Bundle-Version: 3.10.0.201412091906
 Bundle-Name: Source of Eclipse Compiler for Java(TM)
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.jdt.core.compiler.batch.source
