@@ -71,6 +71,7 @@ public class JavaStatementPostfixContext extends JavaContext {
 
 	private static final Object CONTEXT_TYPE_ID = "postfix"; //$NON-NLS-1$
 	private static final String OBJECT_SIGNATURE = "java.lang.Object"; //$NON-NLS-1$
+	private static final String ID_SEPARATOR = "§§"; //$NON-NLS-1$
 	
 	protected ASTNode currentCompletionNode;
 	protected ASTNode currentCompletionNodeParent;
@@ -119,7 +120,7 @@ public class JavaStatementPostfixContext extends JavaContext {
 	}
 	
 	public String addImportGenericClass(String className) {
-		Pattern p = Pattern.compile("[a-zA-Z0-9\\.]+");
+		Pattern p = Pattern.compile("[a-zA-Z0-9$_\\.]+");
 		Matcher m = p.matcher(className);
 		List<String> classNames = new ArrayList<String>();
 		Map<String, String> classNameMapping = new HashMap<String, String>();
@@ -147,11 +148,11 @@ public class JavaStatementPostfixContext extends JavaContext {
 			}
 		});
 		for (int i = 0; i < classNames.size(); i++) {
-			className = className.replace(classNames.get(i), "$$" + i + "$$");
+			className = className.replace(classNames.get(i), ID_SEPARATOR + i + ID_SEPARATOR);
 			classNameMapping.put(classNames.get(i), addImport(classNames.get(i)));
 		}
 		for (int i = 0; i < classNames.size(); i++) {
-			className = className.replace("$$" + i + "$$", classNameMapping.get(classNames.get(i)));
+			className = className.replace(ID_SEPARATOR + i + ID_SEPARATOR, classNameMapping.get(classNames.get(i)));
 		}
 		return className;
 	}
