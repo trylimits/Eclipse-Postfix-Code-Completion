@@ -47,11 +47,11 @@ public class TemplateEngine {
 	private static final String $_WORD_SELECTION= "${" + GlobalTemplateVariables.WordSelection.NAME + "}"; //$NON-NLS-1$ //$NON-NLS-2$
 
 	/** The context type. */
-	protected TemplateContextType fContextType;
+	private TemplateContextType fContextType;
 	/** The result proposals. */
-	protected ArrayList<TemplateProposal> fProposals= new ArrayList<TemplateProposal>();
+	private ArrayList<TemplateProposal> fProposals= new ArrayList<TemplateProposal>();
 	/** Positions created on the key documents to remove in reset. */
-	protected final Map<IDocument, Position> fPositions= new HashMap<IDocument, Position>();
+	private final Map<IDocument, Position> fPositions= new HashMap<IDocument, Position>();
 
 	/**
 	 * Creates the template engine for the given <code>contextType</code>.
@@ -146,6 +146,14 @@ public class TemplateEngine {
 				}
 			}
 		}
+	}
+
+	protected TemplateContextType getContextType() {
+		return fContextType;
+	}
+
+	protected ArrayList<TemplateProposal> getProposals() {
+		return fProposals;
 	}
 
 	protected Image getImage() {

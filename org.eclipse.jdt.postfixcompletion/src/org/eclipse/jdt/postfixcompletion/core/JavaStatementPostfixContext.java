@@ -71,7 +71,7 @@ public class JavaStatementPostfixContext extends JavaContext {
 
 	private static final Object CONTEXT_TYPE_ID = "postfix"; //$NON-NLS-1$
 	private static final String OBJECT_SIGNATURE = "java.lang.Object"; //$NON-NLS-1$
-	private static final String ID_SEPARATOR = "§§"; //$NON-NLS-1$
+	private static final String ID_SEPARATOR = "ï¿½ï¿½"; //$NON-NLS-1$
 	
 	protected ASTNode currentCompletionNode;
 	protected ASTNode currentCompletionNodeParent;
@@ -247,6 +247,13 @@ public class JavaStatementPostfixContext extends JavaContext {
 	@Override
 	public int getEnd() {
 		return getCompletionOffset();
+	}
+	
+	@Override
+	public int getStart() {
+		int result = super.getStart();
+		result -= getAffectedSourceRegion().getLength() + 1;
+		return result;
 	}
 
 	@Deprecated

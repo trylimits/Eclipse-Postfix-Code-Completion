@@ -1701,6 +1701,7 @@ public final class CompletionEngine
 
 		buildContext(astNode, astNodeParent, compilationUnitDeclaration, qualifiedBinding, scope);
 
+		if (astNode instanceof CompletionOnMemberAccess && qualifiedBinding instanceof BaseTypeBinding) return true;
 		if (astNode instanceof CompletionOnFieldType) {
 			completionOnFieldType(astNode, scope);
 		} else if (astNode instanceof CompletionOnMethodReturnType) {
@@ -2606,7 +2607,7 @@ public final class CompletionEngine
 			}
 		} else {
 			if (!access.isInsideAnnotation) {
-				if (!this.requestor.isIgnored(CompletionProposal.KEYWORD) && !access.isSuperAccess() && !(qualifiedBinding instanceof BaseTypeBinding)) {
+				if (!this.requestor.isIgnored(CompletionProposal.KEYWORD) && !access.isSuperAccess()) {
 					findKeywords(this.completionToken, new char[][]{Keywords.NEW}, false, false);
 				}
 

@@ -23,20 +23,7 @@ public class PostfixTemplateProposal extends TemplateProposal {
 			IRegion region, Image image) {
 		super(template, context, region, image);
 	}
-	
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.jdt.internal.ui.text.template.contentassist.TemplateProposal#getReplaceOffset()
-	 */
-	@Override
-	protected int getReplaceOffset() {
-		int result = super.getReplaceOffset();
-		if (getContext() instanceof JavaStatementPostfixContext) {
-			result -= ((JavaStatementPostfixContext)getContext()).getAffectedSourceRegion().getLength() + 1;
-		}
-		return result;
-	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.jdt.internal.ui.text.template.contentassist.TemplateProposal#validate(org.eclipse.jface.text.IDocument, int, org.eclipse.jface.text.DocumentEvent)
@@ -46,7 +33,8 @@ public class PostfixTemplateProposal extends TemplateProposal {
 		if (getContext() instanceof JavaStatementPostfixContext) {
 			JavaStatementPostfixContext c = (JavaStatementPostfixContext) getContext();
 			try {
-				String content = document.get(c.getStart(), offset - c.getStart());
+				int start = c.getStart() + c.getAffectedSourceRegion().getLength() + 1;
+				String content = document.get(start, offset - start);
 				return this.getTemplate().getName().toLowerCase().startsWith(content.toLowerCase());
 			} catch (BadLocationException e) {
 				e.printStackTrace();
