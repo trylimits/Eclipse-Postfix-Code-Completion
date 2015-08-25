@@ -17,19 +17,19 @@
 	${cursor}&#13;
 }</template>
 
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.fori" context="postfix" deleted="false" description="Creates a for statement which iterates over an array" enabled="true" name="fori">for (int ${index} = 0; i &lt; ${i:inner_expression(array)}.length; ${index}++) {&#13;
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.fori" context="postfix" deleted="false" description="Creates a for statement which iterates over an array" enabled="true" name="fori">for (int ${index} = 0; ${index} &lt; ${i:inner_expression(array)}.length; ${index}++) {&#13;
 	${cursor}&#13;
 }</template>
 
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.foriub" context="postfix" deleted="false" description="Creates an indexed for statement which uses the given integer as upper bound" enabled="true" name="fori">for (int ${index} = 0; i &lt; ${i:inner_expression(int)}; ${index}++) {&#13;
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.foriub" context="postfix" deleted="false" description="Creates an indexed for statement which uses the given integer as upper bound" enabled="true" name="fori">for (int ${index} = 0; ${index} &lt; ${i:inner_expression(int)}; ${index}++) {&#13;
 	${cursor}&#13;
 }</template>
 
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.forrlb" context="postfix" deleted="false" description="Creates an indexed for statement which uses the given integer - 1 as starting value (counting backwards)" enabled="true" name="forr">for (int ${index} = ${i:inner_expression(int)} - 1; i &gt;= 0 ; ${index}--) {&#13;
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.forrlb" context="postfix" deleted="false" description="Creates an indexed for statement which uses the given integer - 1 as starting value (counting backwards)" enabled="true" name="forr">for (int ${index} = ${i:inner_expression(int)} - 1; ${index} &gt;= 0 ; ${index}--) {&#13;
 	${cursor}&#13;
 }</template>
 
-	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.forr" context="postfix" deleted="false" description="Creates a for statement which iterates over an array in reverse order" enabled="true" name="forr">for (int ${index} = ${i:inner_expression(array)}.length - 1; i &gt;= 0; ${index}--) {&#13;
+	<template autoinsert="true" id="org.eclipse.jdt.postfixcompletion.forr" context="postfix" deleted="false" description="Creates a for statement which iterates over an array in reverse order" enabled="true" name="forr">for (int ${index} = ${i:inner_expression(array)}.length - 1; ${index} &gt;= 0; ${index}--) {&#13;
 	${cursor}&#13;
 }</template>
 
